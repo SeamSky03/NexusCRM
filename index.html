@@ -529,7 +529,7 @@
         <input type="hidden" id="leadId">
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <!-- Tanggal Input (DAPAT DIPILIH & DIEDIT) -->
+          <!-- Tanggal Input -->
           <div>
             <label class="block font-semibold text-slate-700 mb-1">
               <i class="fa-regular fa-calendar text-emerald-600 mr-1"></i> Tanggal Lead <span class="text-rose-500">*</span>
@@ -550,137 +550,31 @@
           </div>
         </div>
 
-        <!-- NEW FIELD: Produk yang Ditanya (Inquired Product) -->
+        <!-- FIELD: Produk yang Ditanya (Inquired Product) -->
         <div class="bg-amber-50/70 p-3.5 rounded-xl border border-amber-200/80 space-y-2">
           <label class="font-bold text-amber-900 block text-xs flex items-center">
             <i class="fa-solid fa-comments text-amber-600 mr-1.5 text-sm"></i> Produk yang Ditanya Customer (Inquiry) <span class="text-rose-500 ml-1">*</span>
           </label>
-          <p class="text-[11px] text-amber-700">Pilih atau ketik produk yang pertama kali ditanyakan customer untuk analisis riset pasar.</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <div>
-              <select id="leadAskedProductSelect" onchange="handleAskedProductSelectChange(this)" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 bg-white font-medium">
-                <option value="">-- Pilih dari Katalog --</option>
-                <!-- Dynamically populated options from products array + 'Custom / Lainnya' -->
-              </select>
-            </div>
-            <div>
-              <input type="text" id="leadAskedProductCustom" placeholder="Atau ketik nama produk ditanya..." class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 bg-white">
-            </div>
-          </div>
+          <input type="text" id="leadAskedProduct" required placeholder="Contoh: Paket Premium, Suplemen Whitening, dll" class="w-full px-3 py-2 bg-white border border-amber-300 rounded-lg focus:ring-2 focus:ring-amber-500">
         </div>
 
-        <!-- Field Kondisi Spesifik: Tipe Kulit & Tipe Rambut -->
-        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2.5">
-          <label class="font-bold text-slate-700 block text-xs flex items-center">
-            <i class="fa-solid fa-heart-pulse text-emerald-600 mr-1.5"></i> Kondisi Spesifik Pelanggan
-          </label>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <span class="block font-semibold text-slate-600 mb-1 text-[11px]">Tipe Kulit:</span>
-              <div class="flex flex-wrap gap-2 text-[11px]">
-                <label class="inline-flex items-center bg-white px-2 py-1 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100">
-                  <input type="checkbox" name="skinType" value="Sensitif" class="rounded text-emerald-600 focus:ring-emerald-500 mr-1.5"> Sensitif
-                </label>
-                <label class="inline-flex items-center bg-white px-2 py-1 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100">
-                  <input type="checkbox" name="skinType" value="Eksim" class="rounded text-emerald-600 focus:ring-emerald-500 mr-1.5"> Eksim
-                </label>
-                <label class="inline-flex items-center bg-white px-2 py-1 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100">
-                  <input type="checkbox" name="skinType" value="Kering" class="rounded text-emerald-600 focus:ring-emerald-500 mr-1.5"> Kering
-                </label>
-                <label class="inline-flex items-center bg-white px-2 py-1 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100">
-                  <input type="checkbox" name="skinType" value="Berminyak" class="rounded text-emerald-600 focus:ring-emerald-500 mr-1.5"> Berminyak
-                </label>
-              </div>
-            </div>
-            <div>
-              <span class="block font-semibold text-slate-600 mb-1 text-[11px]">Tipe Rambut:</span>
-              <div class="flex flex-wrap gap-2 text-[11px]">
-                <label class="inline-flex items-center bg-white px-2 py-1 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100">
-                  <input type="checkbox" name="hairType" value="Ketombe" class="rounded text-emerald-600 focus:ring-emerald-500 mr-1.5"> Ketombe
-                </label>
-                <label class="inline-flex items-center bg-white px-2 py-1 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100">
-                  <input type="checkbox" name="hairType" value="Rontok" class="rounded text-emerald-600 focus:ring-emerald-500 mr-1.5"> Rontok
-                </label>
-                <label class="inline-flex items-center bg-white px-2 py-1 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100">
-                  <input type="checkbox" name="hairType" value="Mengembang" class="rounded text-emerald-600 focus:ring-emerald-500 mr-1.5"> Mengembang
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Alamat -->
-        <div>
-          <label class="block font-semibold text-slate-700 mb-1">Alamat Pelanggan</label>
-          <input type="text" id="leadAddress" placeholder="Contoh: Jl. Sudirman No. 12, Jakarta Selatan" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
-        </div>
-
-        <!-- Products Selector (Multiple Items supported) -->
-        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-          <div class="flex justify-between items-center mb-2">
-            <label class="font-bold text-slate-700">Produk yang Dibeli / Minat Fix <span class="text-rose-500">*</span></label>
-            <button type="button" onclick="addProductRow()" class="text-emerald-600 hover:text-emerald-700 font-semibold flex items-center">
-              <i class="fa-solid fa-plus-circle mr-1"></i> Tambah Produk
-            </button>
-          </div>
-          <div id="productRowsContainer" class="space-y-2">
-            <!-- Row template appended dynamically -->
-          </div>
-        </div>
-
-        <!-- Price, Discount & Calculations -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-emerald-50/60 p-4 rounded-xl border border-emerald-100">
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Total Subtotal Harga</label>
-            <div id="lblSubtotal" class="font-bold text-sm text-slate-800 py-1.5">Rp 0</div>
-          </div>
-
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Diskon</label>
-            <div class="flex space-x-1">
-              <select id="discountType" onchange="calculateLeadTotal()" class="border border-slate-300 rounded-lg px-2 py-1.5 text-xs bg-white">
-                <option value="percent">% Persen</option>
-                <option value="fixed">Rp Nominal</option>
-              </select>
-              <input type="number" id="discountValue" value="0" min="0" oninput="calculateLeadTotal()" class="w-full px-2 py-1.5 border border-slate-300 rounded-lg text-xs bg-white font-semibold">
-            </div>
-          </div>
-
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Harga Akhir (Nett)</label>
-            <div id="lblFinalPrice" class="font-extrabold text-base text-emerald-600 py-1">Rp 0</div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <!-- Sumber Lead -->
           <div>
-            <label class="block font-semibold text-slate-700 mb-1">Sumber Lead <span class="text-rose-500">*</span></label>
+            <label class="block font-semibold text-slate-700 mb-1">Sumber Lead / Channel <span class="text-rose-500">*</span></label>
             <select id="leadSource" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white">
-              <option value="Instagram">Instagram</option>
-              <option value="WhatsApp">WhatsApp</option>
-              <option value="Website">Website</option>
-              <option value="Referral">Referral</option>
-              <option value="Marketplace">Marketplace</option>
+              <option value="WhatsApp">WhatsApp Ads / Direct</option>
+              <option value="Instagram">Instagram DM / Bio</option>
+              <option value="Website">Website Form</option>
+              <option value="Referral">Referral / Teman</option>
+              <option value="Marketplace">Marketplace (Shopee/Tokopedia)</option>
               <option value="Lainnya">Lainnya</option>
             </select>
           </div>
 
-          <!-- Stage Funnel -->
+          <!-- Staff PIC CS -->
           <div>
-            <label class="block font-semibold text-slate-700 mb-1">Tahap Sales Funnel</label>
-            <select id="leadStage" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white">
-              <option value="awareness">1. Awareness</option>
-              <option value="consideration">2. Consideration</option>
-              <option value="conversion">3. Conversion</option>
-              <option value="retention">4. Retention</option>
-              <option value="advocacy">5. Advocacy</option>
-            </select>
-          </div>
-
-          <!-- PIC Staff -->
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">PIC / Staff CS <span class="text-rose-500">*</span></label>
+            <label class="block font-semibold text-slate-700 mb-1">Penanggung Jawab (PIC Staff) <span class="text-rose-500">*</span></label>
             <select id="leadPic" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white">
               <option value="Siti CS">Siti CS</option>
               <option value="Budi CS">Budi CS</option>
@@ -689,452 +583,336 @@
           </div>
         </div>
 
-        <!-- Catatan / Notes -->
-        <div>
-          <label class="block font-semibold text-slate-700 mb-1">Catatan / Notes CS</label>
-          <textarea id="leadNotes" rows="2" placeholder="Catatan preferensi customer, tanggal janji follow up, dll..." class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></textarea>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- Tahap Pipeline -->
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Tahap Sales Pipeline <span class="text-rose-500">*</span></label>
+            <select id="leadStage" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white font-semibold text-emerald-700">
+              <option value="awareness">1. Awareness (Tanya-tanya)</option>
+              <option value="consideration">2. Consideration (Minta Penawaran/Harga)</option>
+              <option value="conversion">3. Conversion (Sudah Beli / Closing)</option>
+              <option value="retention">4. Retention (Repeat Order)</option>
+              <option value="advocacy">5. Advocacy (Rekomendasi / Loyal)</option>
+            </select>
+          </div>
+
+          <!-- Produk Yang Akhirnya Dibeli -->
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Produk Akhir yang Dibeli (Jika Closing)</label>
+            <select id="leadProductBought" onchange="autoFillPrice()" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white">
+              <option value="">-- Belum Beli / Belum Closing --</option>
+              <!-- Populated dynamically from Product Catalog -->
+            </select>
+          </div>
         </div>
 
-        <!-- Footer Buttons -->
-        <div class="pt-3 border-t border-slate-200 flex justify-end space-x-2">
-          <button type="button" onclick="closeLeadModal()" class="px-4 py-2 border border-slate-300 text-slate-600 rounded-lg hover:bg-slate-100 font-medium">Batal</button>
-          <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold shadow-md shadow-emerald-600/20">
-            <i class="fa-solid fa-floppy-disk mr-1.5"></i> Simpan Data Lead
-          </button>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- Nilai Transaksi / Harga -->
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Nilai Penjualan Akhir (Rp)</label>
+            <input type="number" id="leadValue" placeholder="0" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 font-semibold text-slate-800">
+          </div>
+
+          <!-- Status Pembayaran -->
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Status Pembayaran</label>
+            <select id="leadPaymentStatus" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white">
+              <option value="Belum Bayar">Belum Bayar</option>
+              <option value="Lunas">Lunas</option>
+              <option value="DP / Uang Muka">DP / Uang Muka</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Catatan / History Follow Up -->
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Catatan Follow-Up & Respon Customer</label>
+          <textarea id="leadNotes" rows="3" placeholder="Tuliskan perkembangan chat, keluhan, atau alasan customer belum closing..." class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></textarea>
+        </div>
+
+        <!-- Modal Footer Actions -->
+        <div class="flex justify-end space-x-3 pt-3 border-t border-slate-200">
+          <button type="button" onclick="closeLeadModal()" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-600 hover:bg-slate-100 font-medium">Batal</button>
+          <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold shadow-md shadow-emerald-600/20">Simpan Data Lead</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- MODAL 2: LEAD DETAIL & STAGE HISTORY TIMELINE -->
-  <div id="detailModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden my-8">
-      <div class="bg-slate-900 text-white px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center space-x-3">
-          <div id="detailAvatar" class="w-10 h-10 rounded-full bg-emerald-500 font-bold flex items-center justify-center text-white text-base"></div>
-          <div>
-            <h3 id="detailName" class="font-bold text-base leading-tight"></h3>
-            <span id="detailSourceBadge" class="text-[10px] bg-slate-800 text-emerald-400 px-2 py-0.5 rounded-full border border-slate-700"></span>
-          </div>
-        </div>
-        <button onclick="closeDetailModal()" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-
-      <div class="p-6 space-y-5 text-xs max-h-[80vh] overflow-y-auto">
-        <!-- Contact & Quick WA action -->
-        <div class="flex justify-between items-center p-3.5 bg-emerald-50 rounded-xl border border-emerald-100">
-          <div>
-            <p class="text-[11px] text-slate-500 font-medium">Nomor WhatsApp / HP:</p>
-            <p id="detailPhone" class="font-bold text-sm text-slate-800 mt-0.5"></p>
-          </div>
-          <a id="btnQuickWA" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-lg font-semibold flex items-center shadow-sm">
-            <i class="fa-brands fa-whatsapp text-sm mr-1.5"></i> Chat WA
-          </a>
-        </div>
-
-        <!-- Details Grid -->
-        <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
-          <div>
-            <p class="text-slate-400 text-[11px]">Tanggal Lead:</p>
-            <p id="detailLeadDate" class="font-bold text-slate-800 text-xs mt-0.5"></p>
-          </div>
-          <div>
-            <p class="text-slate-400 text-[11px]">Produk Ditanya (Inquiry):</p>
-            <p id="detailAskedProduct" class="font-bold text-amber-600 text-xs mt-0.5"></p>
-          </div>
-          <div>
-            <p class="text-slate-400 text-[11px]">Produk Dibeli:</p>
-            <p id="detailProducts" class="font-semibold text-slate-800 text-xs mt-0.5"></p>
-          </div>
-          <div>
-            <p class="text-slate-400 text-[11px]">Harga Akhir:</p>
-            <p id="detailPrice" class="font-bold text-emerald-600 text-sm mt-0.5"></p>
-          </div>
-          <div>
-            <p class="text-slate-400 text-[11px]">PIC Staff CS:</p>
-            <p id="detailPic" class="font-semibold text-slate-800 mt-0.5"></p>
-          </div>
-          <div>
-            <p class="text-slate-400 text-[11px]">Kondisi Spesifik:</p>
-            <p id="detailCondition" class="font-semibold text-slate-800 mt-0.5"></p>
-          </div>
-          <div class="col-span-2">
-            <p class="text-slate-400 text-[11px]">Alamat:</p>
-            <p id="detailAddress" class="text-slate-700 mt-0.5"></p>
-          </div>
-        </div>
-
-        <!-- Stage Changer Direct Action -->
-        <div class="p-4 bg-slate-100 rounded-xl border border-slate-200">
-          <label class="block font-bold text-slate-700 mb-2">Pindahkan Tahap Funnel Sekarang:</label>
-          <div class="flex space-x-2">
-            <select id="quickStageSelect" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white font-medium">
-              <option value="awareness">1. Awareness</option>
-              <option value="consideration">2. Consideration</option>
-              <option value="conversion">3. Conversion</option>
-              <option value="retention">4. Retention</option>
-              <option value="advocacy">5. Advocacy</option>
-            </select>
-            <button onclick="updateStageFromDetail()" class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg font-semibold">
-              Update Tahap
-            </button>
-          </div>
-        </div>
-
-        <!-- History Log Timeline -->
-        <div>
-          <h4 class="font-bold text-slate-700 text-xs mb-3 flex items-center">
-            <i class="fa-solid fa-clock-rotate-left mr-2 text-emerald-500"></i> Riwayat Perpindahan Status & Activity Log
-          </h4>
-          <div id="historyTimeline" class="space-y-3 relative pl-4 border-l-2 border-slate-200">
-            <!-- Timeline items injected dynamically -->
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-slate-50 px-6 py-3 border-t border-slate-200 flex justify-between items-center">
-        <button id="btnDeleteLead" onclick="deleteCurrentLead()" class="text-rose-600 hover:text-rose-700 font-medium text-xs flex items-center">
-          <i class="fa-solid fa-trash-can mr-1"></i> Hapus Lead
-        </button>
-        <button id="btnEditLead" onclick="editCurrentLead()" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-1.5 rounded-lg text-xs font-semibold">
-          <i class="fa-solid fa-pen-to-square mr-1"></i> Edit Data Lead
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 3: ADD PRODUCT -->
+  <!-- MODAL 2: ADD PRODUCT CATALOG -->
   <div id="productModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden">
       <div class="bg-slate-900 text-white px-6 py-4 flex justify-between items-center">
-        <h3 class="font-bold text-sm">Tambah Produk Baru</h3>
-        <button onclick="closeAddProductModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+        <h3 class="font-bold text-base flex items-center">
+          <i class="fa-solid fa-box text-emerald-400 mr-2"></i> Tambah Katalog Produk
+        </h3>
+        <button onclick="closeProductModal()" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <form onsubmit="saveProduct(event)" class="p-6 space-y-4 text-xs">
+
+      <form id="productForm" onsubmit="saveProduct(event)" class="p-6 space-y-4 text-xs">
         <div>
-          <label class="block font-semibold text-slate-700 mb-1">Nama Produk / Layanan</label>
-          <input type="text" id="newProdName" required placeholder="Contoh: Paket Premium CRM" class="w-full px-3 py-2 border rounded-lg">
+          <label class="block font-semibold text-slate-700 mb-1">Nama Produk / Layanan <span class="text-rose-500">*</span></label>
+          <input type="text" id="prodName" required placeholder="Contoh: Paket Glow Platinum" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
         </div>
+
         <div>
-          <label class="block font-semibold text-slate-700 mb-1">Harga Dasar (Rp)</label>
-          <input type="number" id="newProdPrice" required min="0" placeholder="150000" class="w-full px-3 py-2 border rounded-lg">
+          <label class="block font-semibold text-slate-700 mb-1">Harga Standar (Rp) <span class="text-rose-500">*</span></label>
+          <input type="number" id="prodPrice" required placeholder="250000" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
         </div>
-        <div class="flex justify-end space-x-2 pt-2">
-          <button type="button" onclick="closeAddProductModal()" class="px-4 py-2 border rounded-lg text-slate-600">Batal</button>
-          <button type="submit" class="px-4 py-2 bg-emerald-600 text-white rounded-lg font-bold">Simpan Produk</button>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Kategori Produk</label>
+          <input type="text" id="prodCategory" placeholder="Contoh: Skincare, Elektronik, Jasa" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
+        </div>
+
+        <div class="flex justify-end space-x-3 pt-3 border-t border-slate-200">
+          <button type="button" onclick="closeProductModal()" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-600 hover:bg-slate-100 font-medium">Batal</button>
+          <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold shadow-md">Simpan Produk</button>
         </div>
       </form>
     </div>
   </div>
 
+  <!-- JAVASCRIPT APP LOGIC -->
   <script>
-    /* Global Application State */
-    let leads = [];
-    let products = [
-      { id: 'p1', name: 'Paket Skincare Glow', price: 250000 },
-      { id: 'p2', name: 'Serum Anti Aging', price: 175000 },
-      { id: 'p3', name: 'Facial Wash Herbal', price: 85000 },
-      { id: 'p4', name: 'Susu Nutrisi Herbal', price: 120000 },
-      { id: 'p5', name: 'Cocoa Body Butter', price: 135000 }
-    ];
+    // Initial State & Initial Dummy Data
     let activeUser = 'Admin';
-    let currentSelectedLeadId = null;
+    let gsheetWebhookUrl = localStorage.getItem('nexus_gsheet_url') || '';
+    let autoSyncEnabled = localStorage.getItem('nexus_auto_sync') === 'true';
+
+    let products = JSON.parse(localStorage.getItem('nexus_products')) || [
+      { id: 'p1', name: 'Paket Basic Skincare', price: 150000, category: 'Skincare' },
+      { id: 'p2', name: 'Paket Ultimate Glow', price: 350000, category: 'Skincare' },
+      { id: 'p3', name: 'Serum Anti Aging Extra', price: 210000, category: 'Serum' },
+      { id: 'p4', name: 'Susu Nutrisi Premium', price: 180000, category: 'Health' }
+    ];
+
+    let leads = JSON.parse(localStorage.getItem('nexus_leads')) || [
+      {
+        id: 'L001',
+        date: '2026-08-01',
+        name: 'Andi Wijaya',
+        phone: '081234567890',
+        source: 'Instagram',
+        askedProduct: 'Paket Ultimate Glow',
+        productBought: 'Paket Ultimate Glow',
+        value: 350000,
+        stage: 'conversion',
+        pic: 'Siti CS',
+        paymentStatus: 'Lunas',
+        notes: 'Sudah melakukan pembayaran via Transfer BCA'
+      },
+      {
+        id: 'L002',
+        date: '2026-08-05',
+        name: 'Rina Melati',
+        phone: '085711223344',
+        source: 'WhatsApp',
+        askedProduct: 'Serum Anti Aging',
+        productBought: '',
+        value: 0,
+        stage: 'awareness',
+        pic: 'Budi CS',
+        paymentStatus: 'Belum Bayar',
+        notes: 'Menanyakan pricelist dan ongkir ke Jakarta'
+      },
+      {
+        id: 'L003',
+        date: '2026-08-07',
+        name: 'Dewi Lestari',
+        phone: '081987654321',
+        source: 'Website',
+        askedProduct: 'Susu Nutrisi Premium',
+        productBought: 'Susu Nutrisi Premium',
+        value: 180000,
+        stage: 'retention',
+        pic: 'Maya CS',
+        paymentStatus: 'Lunas',
+        notes: 'Repeat order kedua kalinya'
+      },
+      {
+        id: 'L004',
+        date: '2026-08-02',
+        name: 'Hendro Prasetyo',
+        phone: '082144556677',
+        source: 'Referral',
+        askedProduct: 'Paket Basic Skincare',
+        productBought: '',
+        value: 0,
+        stage: 'consideration',
+        pic: 'Siti CS',
+        paymentStatus: 'Belum Bayar',
+        notes: 'Perlu follow-up lagi untuk promo paket hemat'
+      }
+    ];
+
+    // Chart References
     let funnelChartInstance = null;
     let sourceChartInstance = null;
     let askedProductChartInstance = null;
-    let autoSyncEnabled = false;
 
-    // Seed Data with Lead Dates and Inquired Product (askedProduct)
-    const initialSeedLeads = [
-      {
-        id: 'L-101',
-        leadDate: '2026-08-07',
-        name: 'Anita Wijaya',
-        phone: '081298765432',
-        address: 'Jl. Melati No 45, Bandung',
-        askedProduct: 'Cocoa Body Butter',
-        items: [{ productId: 'p5', name: 'Cocoa Body Butter', qty: 1, price: 135000 }],
-        discountType: 'percent',
-        discountVal: 10,
-        finalPrice: 121500,
-        skinType: ['Sensitif', 'Kering'],
-        hairType: ['Rontok'],
-        stage: 'awareness',
-        leadSource: 'Instagram',
-        notes: 'Tertarik via Ads IG, tanya pengiriman ke Bandung',
-        pic: 'Siti CS',
-        createdAt: new Date(Date.now() - 3600000 * 24 * 4).toISOString(),
-        updatedAt: new Date(Date.now() - 3600000 * 24 * 4).toISOString(),
-        history: [
-          { stage: 'awareness', changedBy: 'Siti CS', timestamp: new Date(Date.now() - 3600000 * 24 * 4).toISOString(), notes: 'Lead baru masuk dari IG' }
-        ]
-      },
-      {
-        id: 'L-102',
-        leadDate: '2026-08-06',
-        name: 'Rudi Hermawan',
-        phone: '085711223344',
-        address: 'Kebayoran Baru, Jakarta Selatan',
-        askedProduct: 'Paket Skincare Glow',
-        items: [
-          { productId: 'p1', name: 'Paket Skincare Glow', qty: 1, price: 250000 },
-          { productId: 'p2', name: 'Serum Anti Aging', qty: 1, price: 175000 }
-        ],
-        discountType: 'fixed',
-        discountVal: 25000,
-        finalPrice: 400000,
-        skinType: ['Berminyak'],
-        hairType: ['Ketombe'],
-        stage: 'consideration',
-        leadSource: 'WhatsApp',
-        notes: 'Sudah dikirimkan catalog PDF dan estimasi ongkir',
-        pic: 'Budi CS',
-        createdAt: new Date(Date.now() - 3600000 * 24 * 5).toISOString(),
-        updatedAt: new Date(Date.now() - 3600000 * 24 * 4).toISOString(),
-        history: [
-          { stage: 'awareness', changedBy: 'Budi CS', timestamp: new Date(Date.now() - 3600000 * 24 * 5).toISOString(), notes: 'Lead masuk dari WA' },
-          { stage: 'consideration', changedBy: 'Budi CS', timestamp: new Date(Date.now() - 3600000 * 24 * 4).toISOString(), notes: 'Kirim penawaran' }
-        ]
-      },
-      {
-        id: 'L-103',
-        leadDate: '2026-08-10',
-        name: 'Dewi Lestari',
-        phone: '081388990011',
-        address: 'Surabaya Timur, Jatim',
-        askedProduct: 'Serum Anti Aging',
-        items: [{ productId: 'p3', name: 'Facial Wash Herbal', qty: 2, price: 85000 }],
-        discountType: 'percent',
-        discountVal: 0,
-        finalPrice: 170000,
-        skinType: ['Eksim'],
-        hairType: ['Mengembang'],
-        stage: 'conversion',
-        leadSource: 'Marketplace',
-        notes: 'Awalnya tanya Serum, tapi checkout Facial Wash',
-        pic: 'Maya CS',
-        createdAt: new Date(Date.now() - 3600000 * 12).toISOString(),
-        updatedAt: new Date(Date.now() - 3600000 * 2).toISOString(),
-        history: [
-          { stage: 'awareness', changedBy: 'Maya CS', timestamp: new Date(Date.now() - 3600000 * 12).toISOString(), notes: 'Tanya stok' },
-          { stage: 'consideration', changedBy: 'Maya CS', timestamp: new Date(Date.now() - 3600000 * 5).toISOString(), notes: 'Checkout shopee' },
-          { stage: 'conversion', changedBy: 'Maya CS', timestamp: new Date(Date.now() - 3600000 * 2).toISOString(), notes: 'Lunas & Kirim' }
-        ]
-      },
-      {
-        id: 'L-104',
-        leadDate: '2026-08-11',
-        name: 'Fikri Ramadhan',
-        phone: '082199887766',
-        address: 'Tangerang Kota',
-        askedProduct: 'Serum Anti Aging',
-        items: [{ productId: 'p2', name: 'Serum Anti Aging', qty: 1, price: 175000 }],
-        discountType: 'percent',
-        discountVal: 0,
-        finalPrice: 175000,
-        skinType: ['Sensitif'],
-        hairType: [],
-        stage: 'awareness',
-        leadSource: 'Instagram',
-        notes: 'Tanya promo serum untuk pemakaian pertama',
-        pic: 'Siti CS',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        history: [
-          { stage: 'awareness', changedBy: 'Siti CS', timestamp: new Date().toISOString(), notes: 'Lead baru masuk' }
-        ]
-      }
-    ];
+    // Initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('gSheetWebhookUrl').value = gsheetWebhookUrl;
+      document.getElementById('chkAutoSync').checked = autoSyncEnabled;
+      
+      populateProductDropdown();
+      renderProducts();
+      renderAll();
+    });
 
-    // Initialization on DOM Load
-    window.onload = function() {
-      loadStoredData();
-      renderAllViews();
-      initRealtimeSyncPolling();
-      updateNotifications();
-    };
-
-    function loadStoredData() {
-      const storedLeads = localStorage.getItem('nexus_crm_leads');
-      if (storedLeads) {
-        try { 
-          leads = JSON.parse(storedLeads);
-          // Ensure leadDate field exists for older items
-          leads.forEach(l => {
-            if(!l.leadDate) {
-              l.leadDate = l.createdAt ? l.createdAt.slice(0, 10) : new Date().toISOString().slice(0, 10);
-            }
-            if(!l.askedProduct) {
-              l.askedProduct = (l.items && l.items.length > 0) ? l.items[0].name : 'Belum Ditentukan';
-            }
-          });
-        } catch(e) { 
-          leads = initialSeedLeads; 
-        }
-      } else {
-        leads = initialSeedLeads;
-        saveLeadsToStorage();
-      }
-
-      const storedProducts = localStorage.getItem('nexus_crm_products');
-      if (storedProducts) {
-        try { products = JSON.parse(storedProducts); } catch(e) {}
-      }
-
-      const savedUrl = localStorage.getItem('nexus_crm_gsheet_url');
-      if (savedUrl) {
-        const inputEl = document.getElementById('gSheetWebhookUrl');
-        if (inputEl) inputEl.value = savedUrl;
-      }
-
-      autoSyncEnabled = localStorage.getItem('nexus_crm_autosync') === 'true';
-      const chk = document.getElementById('chkAutoSync');
-      if (chk) chk.checked = autoSyncEnabled;
+    // Helper: Format Rupiah
+    function formatRp(val) {
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val || 0);
     }
 
-    function saveLeadsToStorage() {
-      localStorage.setItem('nexus_crm_leads', JSON.stringify(leads));
-      // Broadcast event for multi-tab sync
-      if (window.BroadcastChannel) {
-        const bc = new BroadcastChannel('nexus_crm_channel');
-        bc.postMessage({ type: 'SYNC_LEADS', data: leads });
-      }
-
-      if (autoSyncEnabled) {
-        syncToGoogleSheets(true); // Silent push on change
+    // Save Data LocalStorage
+    function saveData() {
+      localStorage.setItem('nexus_leads', JSON.stringify(leads));
+      localStorage.setItem('nexus_products', JSON.stringify(products));
+      
+      if (autoSyncEnabled && gsheetWebhookUrl) {
+        syncToGoogleSheets(true);
       }
     }
 
-    function initRealtimeSyncPolling() {
-      if (window.BroadcastChannel) {
-        const bc = new BroadcastChannel('nexus_crm_channel');
-        bc.onmessage = (event) => {
-          if (event.data && event.data.type === 'SYNC_LEADS') {
-            leads = event.data.data;
-            renderAllViews();
-            updateNotifications();
-          }
-        };
-      }
-      setInterval(() => {
-        updateNotifications();
-      }, 30000);
-    }
-
-    function renderAllViews() {
-      renderPipeline();
-      renderTable();
-      renderDashboardCharts();
-      renderProductsCatalog();
-    }
-
-    function changeActiveUser(val) {
-      activeUser = val;
-      renderAllViews();
-    }
-
+    // Tab Switching
     function switchTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active-tab', 'text-emerald-400', 'bg-slate-900/60');
+        btn.classList.remove('active-tab', 'text-emerald-400', 'bg-slate-900/60', 'font-semibold');
         btn.classList.add('text-slate-400');
       });
 
       document.getElementById(`view-${tabName}`).classList.remove('hidden');
       const activeBtn = document.getElementById(`tab-${tabName}`);
-      activeBtn.classList.add('active-tab', 'text-emerald-400', 'bg-slate-900/60');
+      activeBtn.classList.add('active-tab', 'text-emerald-400', 'bg-slate-900/60', 'font-semibold');
       activeBtn.classList.remove('text-slate-400');
 
       if (tabName === 'dashboard') {
         renderDashboardCharts();
-      } else if (tabName === 'products') {
-        renderProductsCatalog();
       }
     }
 
-    function renderPipeline() {
+    // User Switcher Filter
+    function changeActiveUser(val) {
+      activeUser = val;
+      renderAll();
+    }
+
+    // Filter Logic
+    function getFilteredLeads() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const source = document.getElementById('filterSource').value;
+      const picFilter = document.getElementById('filterPic').value;
+
+      return leads.filter(item => {
+        const matchUser = (activeUser === 'Admin') || (item.pic === activeUser);
+        const matchSearch = item.name.toLowerCase().includes(search) ||
+                            item.phone.includes(search) ||
+                            (item.askedProduct && item.askedProduct.toLowerCase().includes(search)) ||
+                            (item.notes && item.notes.toLowerCase().includes(search));
+        const matchSource = !source || item.source === source;
+        const matchPic = !picFilter || item.pic === picFilter;
+
+        return matchUser && matchSearch && matchSource && matchPic;
+      });
+    }
+
+    function applyFilters() {
+      renderAll();
+    }
+
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('filterSource').value = '';
+      document.getElementById('filterPic').value = '';
+      renderAll();
+    }
+
+    // Render Master Control
+    function renderAll() {
+      const filtered = getFilteredLeads();
+      renderKanban(filtered);
+      renderTable(filtered);
+      renderNotifications();
+      renderDashboardStats(filtered);
+    }
+
+    // 1. Render Kanban Pipeline
+    function renderKanban(data) {
       const stages = ['awareness', 'consideration', 'conversion', 'retention', 'advocacy'];
       
-      stages.forEach(stg => {
-        const col = document.getElementById(`col-${stg}`);
-        if(col) col.innerHTML = '';
-      });
+      stages.forEach(st => {
+        const colEl = document.getElementById(`col-${st}`);
+        colEl.innerHTML = '';
+        
+        const stageItems = data.filter(d => d.stage === st);
+        document.getElementById(`count-${st}`).innerText = stageItems.length;
 
-      const filtered = getFilteredLeads();
+        let totalVal = 0;
+        stageItems.forEach(item => {
+          totalVal += Number(item.value || 0);
+          colEl.appendChild(createKanbanCard(item));
+        });
 
-      const totals = { awareness: 0, consideration: 0, conversion: 0, retention: 0, advocacy: 0 };
-      const counts = { awareness: 0, consideration: 0, conversion: 0, retention: 0, advocacy: 0 };
-
-      filtered.forEach(lead => {
-        const col = document.getElementById(`col-${lead.stage}`);
-        if (col) {
-          counts[lead.stage]++;
-          totals[lead.stage] += (lead.finalPrice || 0);
-
-          const card = document.createElement('div');
-          card.className = 'bg-white rounded-xl p-3 shadow-sm border border-slate-200 cursor-grab hover:shadow-md transition active:cursor-grabbing relative group';
-          card.draggable = true;
-          card.dataset.id = lead.id;
-          
-          card.ondragstart = (e) => handleDragStart(e, lead.id);
-          card.onclick = () => openLeadDetail(lead.id);
-
-          const isStale = isLeadStale(lead);
-          const prodSummary = getLeadProductSummary(lead);
-
-          const primaryProduct = lead.askedProduct || ((lead.items && lead.items.length > 0) ? lead.items[0].name : 'produk kami');
-          const waMsg = `Halo ${lead.name}, bagaimana perkembangan konsultasi mengenai ${primaryProduct}?`;
-          const waUrl = `https://wa.me/${cleanPhoneWA(lead.phone)}?text=${encodeURIComponent(waMsg)}`;
-
-          const skinBadges = (lead.skinType || []).map(s => `<span class="bg-rose-50 text-rose-600 px-1.5 py-0.5 rounded text-[9px] font-semibold border border-rose-100"><i class="fa-solid fa-droplet text-[8px] mr-0.5"></i>${escapeHtml(s)}</span>`).join('');
-          const hairBadges = (lead.hairType || []).map(h => `<span class="bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded text-[9px] font-semibold border border-purple-100"><i class="fa-solid fa-scissors text-[8px] mr-0.5"></i>${escapeHtml(h)}</span>`).join('');
-
-          card.innerHTML = `
-            ${isStale ? `<span class="absolute -top-1 -right-1 bg-amber-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow z-10" title="Belum diupdate > 3 hari"><i class="fa-solid fa-clock mr-0.5"></i> Follow-Up</span>` : ''}
-            <div class="flex justify-between items-start mb-1">
-              <span class="font-bold text-slate-800 text-xs truncate max-w-[110px]">${escapeHtml(lead.name)}</span>
-              <div class="flex items-center space-x-1">
-                <a href="${waUrl}" target="_blank" onclick="event.stopPropagation()" class="w-6 h-6 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center text-xs shadow hover:scale-110 transition-all" title="Chat WA: ${escapeHtml(waMsg)}">
-                  <i class="fa-brands fa-whatsapp"></i>
-                </a>
-                <span class="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100">Rp ${formatRupiah(lead.finalPrice)}</span>
-              </div>
-            </div>
-
-            <!-- Display Lead Date & Asked Product Badge -->
-            <div class="flex items-center justify-between text-[10px] my-1 font-medium">
-              <span class="text-slate-400"><i class="fa-regular fa-calendar mr-1"></i>${formatDateShort(lead.leadDate)}</span>
-              <span class="bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded border border-amber-200 text-[10px] font-semibold truncate max-w-[110px]" title="Ditanya: ${escapeHtml(lead.askedProduct || '-')}">
-                <i class="fa-solid fa-comments text-amber-500 mr-1"></i>${escapeHtml(lead.askedProduct || '-')}
-              </span>
-            </div>
-
-            <p class="text-[11px] text-slate-500 truncate mb-1">
-              <i class="fa-solid fa-box text-slate-400 mr-1"></i><span class="font-medium text-slate-700">Dibeli:</span> ${prodSummary}
-            </p>
-            
-            ${(skinBadges || hairBadges) ? `<div class="flex flex-wrap gap-1 my-1.5">${skinBadges}${hairBadges}</div>` : ''}
-
-            <div class="flex items-center justify-between text-[10px] text-slate-400 border-t border-slate-100 pt-1.5 mt-1.5">
-              <span class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-600 font-medium">${escapeHtml(lead.leadSource)}</span>
-              <span class="flex items-center"><i class="fa-solid fa-user-gear mr-1"></i>${escapeHtml(lead.pic)}</span>
-            </div>
-          `;
-          col.appendChild(card);
-        }
-      });
-
-      stages.forEach(stg => {
-        document.getElementById(`count-${stg}`).innerText = counts[stg];
-        document.getElementById(`total-${stg}`).innerText = `Rp ${formatRupiah(totals[stg])}`;
+        document.getElementById(`total-${st}`).innerText = formatRp(totalVal);
       });
     }
 
-    function handleDragStart(e, id) {
-      e.dataTransfer.setData('text/plain', id);
-      e.target.classList.add('dragging');
+    function createKanbanCard(item) {
+      const card = document.createElement('div');
+      card.className = 'bg-white p-3 rounded-xl border border-slate-200 shadow-sm cursor-grab active:cursor-grabbing hover:shadow-md transition relative group';
+      card.draggable = true;
+      card.dataset.id = item.id;
+
+      card.ondragstart = (e) => {
+        e.dataTransfer.setData('text/plain', item.id);
+        card.classList.add('dragging');
+      };
+
+      card.ondragend = () => {
+        card.classList.remove('dragging');
+      };
+
+      const waLink = `https://wa.me/${item.phone.replace(/[^0-9]/g, '')}`;
+
+      card.innerHTML = `
+        <div class="flex justify-between items-start mb-1.5">
+          <span class="font-bold text-slate-800 text-xs truncate max-w-[130px]">${item.name}</span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded font-medium bg-slate-100 text-slate-600">${item.source}</span>
+        </div>
+
+        <div class="text-[11px] text-amber-800 bg-amber-50 rounded px-2 py-1 mb-2 font-medium border border-amber-100/60 truncate">
+          <i class="fa-solid fa-circle-question text-amber-500 mr-1"></i> ${item.askedProduct || 'Belum diisi'}
+        </div>
+
+        ${item.productBought ? `
+          <div class="text-[11px] text-emerald-700 bg-emerald-50 rounded px-2 py-1 mb-2 font-semibold border border-emerald-100 truncate">
+            <i class="fa-solid fa-bag-shopping text-emerald-500 mr-1"></i> ${item.productBought}
+          </div>
+        ` : ''}
+
+        <div class="flex items-center justify-between text-[11px] pt-1 border-t border-slate-100 text-slate-500">
+          <span class="font-bold text-slate-700">${item.value ? formatRp(item.value) : 'Rp 0'}</span>
+          <span class="text-[10px] text-slate-400">${item.pic}</span>
+        </div>
+
+        <div class="mt-2.5 flex justify-between items-center text-[10px] pt-1">
+          <a href="${waLink}" target="_blank" class="text-emerald-600 hover:text-emerald-700 font-semibold flex items-center">
+            <i class="fa-brands fa-whatsapp text-sm mr-1"></i> Chat WA
+          </a>
+          <div class="space-x-1">
+            <button onclick="editLead('${item.id}')" class="text-slate-400 hover:text-slate-700 p-1"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button onclick="deleteLead('${item.id}')" class="text-slate-400 hover:text-rose-600 p-1"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+      `;
+
+      return card;
     }
 
+    // Drag and Drop Handlers
     function handleDragOver(e) {
       e.preventDefault();
       e.currentTarget.classList.add('drag-over');
@@ -1147,946 +925,508 @@
     function handleDrop(e) {
       e.preventDefault();
       e.currentTarget.classList.remove('drag-over');
-      const leadId = e.dataTransfer.getData('text/plain');
+      const id = e.dataTransfer.getData('text/plain');
       const targetStage = e.currentTarget.dataset.stage;
 
-      const lead = leads.find(l => l.id === leadId);
+      const lead = leads.find(l => l.id === id);
       if (lead && lead.stage !== targetStage) {
-        const oldStage = lead.stage;
         lead.stage = targetStage;
-        lead.updatedAt = new Date().toISOString();
-        
-        if (!lead.history) lead.history = [];
-        lead.history.push({
-          stage: targetStage,
-          changedBy: activeUser,
-          timestamp: new Date().toISOString(),
-          notes: `Pindah status dari ${oldStage} ke ${targetStage}`
-        });
-
-        saveLeadsToStorage();
-        renderAllViews();
-        updateNotifications();
+        saveData();
+        renderAll();
       }
     }
 
-    function renderTable() {
+    // 2. Render Lead Table
+    function renderTable(data) {
       const tbody = document.getElementById('leadTableBody');
       tbody.innerHTML = '';
-      const filtered = getFilteredLeads();
+      document.getElementById('tableRecordCount').innerText = data.length;
 
-      document.getElementById('tableRecordCount').innerText = filtered.length;
-
-      filtered.forEach(lead => {
+      data.forEach(item => {
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-slate-50 transition border-b border-slate-100';
 
-        const stageBadges = {
-          awareness: 'bg-sky-100 text-sky-700',
-          consideration: 'bg-amber-100 text-amber-700',
-          conversion: 'bg-emerald-100 text-emerald-700',
-          retention: 'bg-indigo-100 text-indigo-700',
-          advocacy: 'bg-rose-100 text-rose-700'
-        };
-
         tr.innerHTML = `
-          <td class="py-3 px-4 text-slate-700 font-medium whitespace-nowrap">
-            <i class="fa-regular fa-calendar text-slate-400 mr-1"></i>${formatDateShort(lead.leadDate || lead.createdAt)}
-          </td>
-          <td class="py-3 px-4 font-bold text-slate-800">${escapeHtml(lead.name)}</td>
-          <td class="py-3 px-4 text-emerald-600 font-medium whitespace-nowrap">
-            <a href="https://wa.me/${cleanPhoneWA(lead.phone)}" target="_blank" class="hover:underline flex items-center">
-              <i class="fa-brands fa-whatsapp text-sm mr-1"></i> ${escapeHtml(lead.phone)}
-            </a>
-          </td>
-          <td class="py-3 px-4"><span class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded">${escapeHtml(lead.leadSource)}</span></td>
-          <td class="py-3 px-4">
-            <span class="bg-amber-50 text-amber-800 px-2 py-0.5 rounded border border-amber-200 font-medium text-[11px]">
-              <i class="fa-solid fa-comments text-amber-500 mr-1"></i>${escapeHtml(lead.askedProduct || '-')}
-            </span>
-          </td>
-          <td class="py-3 px-4 truncate max-w-[180px]">${getLeadProductSummary(lead)}</td>
-          <td class="py-3 px-4 text-right font-bold text-slate-800">Rp ${formatRupiah(lead.finalPrice)}</td>
-          <td class="py-3 px-4">
-            <span class="px-2 py-0.5 rounded-full font-bold text-[10px] uppercase ${stageBadges[lead.stage] || 'bg-slate-100'}">
-              ${lead.stage}
-            </span>
-          </td>
-          <td class="py-3 px-4 text-slate-600 font-medium">${escapeHtml(lead.pic)}</td>
-          <td class="py-3 px-4 text-center">
-            <button onclick="openLeadDetail('${lead.id}')" class="text-slate-600 hover:text-emerald-600 p-1.5 rounded hover:bg-slate-100" title="Lihat Detail">
-              <i class="fa-solid fa-eye"></i>
-            </button>
+          <td class="py-2.5 px-4 font-mono text-[11px] text-slate-500">${item.date}</td>
+          <td class="py-2.5 px-4 font-semibold text-slate-800">${item.name}</td>
+          <td class="py-2.5 px-4 font-mono text-slate-600">${item.phone}</td>
+          <td class="py-2.5 px-4"><span class="bg-slate-100 text-slate-700 text-[10px] px-2 py-0.5 rounded">${item.source}</span></td>
+          <td class="py-2.5 px-4 font-medium text-amber-700">${item.askedProduct || '-'}</td>
+          <td class="py-2.5 px-4 font-medium text-emerald-700">${item.productBought || '-'}</td>
+          <td class="py-2.5 px-4 text-right font-bold text-slate-800">${formatRp(item.value)}</td>
+          <td class="py-2.5 px-4 capitalize font-semibold text-[11px] text-slate-600">${item.stage}</td>
+          <td class="py-2.5 px-4 text-slate-500">${item.pic}</td>
+          <td class="py-2.5 px-4 text-center space-x-1">
+            <button onclick="editLead('${item.id}')" class="text-slate-400 hover:text-slate-800 p-1"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button onclick="deleteLead('${item.id}')" class="text-slate-400 hover:text-rose-600 p-1"><i class="fa-solid fa-trash"></i></button>
           </td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    function getFilteredLeads() {
-      const q = document.getElementById('searchInput').value.toLowerCase();
-      const source = document.getElementById('filterSource').value;
-      const pic = document.getElementById('filterPic').value;
+    // 3. Stale Lead Notification Logic
+    function renderNotifications() {
+      const notifList = document.getElementById('notifList');
+      const badge = document.getElementById('notifBadge');
+      const countText = document.getElementById('notifCountText');
 
-      return leads.filter(l => {
-        const matchSearch = !q || 
-          l.name.toLowerCase().includes(q) || 
-          l.phone.includes(q) || 
-          (l.askedProduct && l.askedProduct.toLowerCase().includes(q)) ||
-          (l.notes && l.notes.toLowerCase().includes(q)) ||
-          getLeadProductSummary(l).toLowerCase().includes(q);
+      notifList.innerHTML = '';
+      const now = new Date();
 
-        const matchSource = !source || l.leadSource === source;
-        const matchPic = !pic || l.pic === pic;
+      // Filter leads not updated in last 3 days and not closed
+      const staleLeads = leads.filter(item => {
+        if (item.stage === 'conversion' || item.stage === 'retention') return false;
+        const leadDate = new Date(item.date);
+        const diffDays = Math.floor((now - leadDate) / (1000 * 60 * 60 * 24));
+        return diffDays >= 3;
+      });
 
-        return matchSearch && matchSource && matchPic;
+      if (staleLeads.length > 0) {
+        badge.innerText = staleLeads.length;
+        badge.classList.remove('hidden');
+        countText.innerText = `${staleLeads.length} Lead Stagnan`;
+
+        staleLeads.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'p-3 hover:bg-slate-50 flex justify-between items-center';
+          div.innerHTML = `
+            <div>
+              <p class="font-bold text-slate-800">${item.name} (${item.pic})</p>
+              <p class="text-[11px] text-slate-500">Ditanya: ${item.askedProduct || '-'}</p>
+              <p class="text-[10px] text-amber-600 mt-0.5"><i class="fa-solid fa-clock mr-1"></i> Belum ada update >3 hari</p>
+            </div>
+            <button onclick="editLead('${item.id}')" class="px-2.5 py-1 bg-amber-500 text-white text-[10px] rounded font-semibold hover:bg-amber-600">Follow Up</button>
+          `;
+          notifList.appendChild(div);
+        });
+      } else {
+        badge.classList.add('hidden');
+        countText.innerText = `0 Lead Stagnan`;
+        notifList.innerHTML = `<div class="p-4 text-center text-slate-400 italic">Semua follow up teratur! Tidak ada lead stagnan.</div>`;
+      }
+    }
+
+    function toggleNotifDropdown() {
+      document.getElementById('notifDropdown').classList.toggle('hidden');
+    }
+
+    // 4. Dashboard Stats & Analytics
+    function renderDashboardStats(data) {
+      document.getElementById('statTotalLeads').innerText = data.length;
+
+      const closingLeads = data.filter(d => d.stage === 'conversion' || d.stage === 'retention' || d.stage === 'advocacy');
+      const totalSales = closingLeads.reduce((acc, curr) => acc + Number(curr.value || 0), 0);
+      document.getElementById('statTotalSales').innerText = formatRp(totalSales);
+
+      const convRate = data.length > 0 ? ((closingLeads.length / data.length) * 100).toFixed(1) : 0;
+      document.getElementById('statConversionRate').innerText = `${convRate}%`;
+
+      const now = new Date();
+      const staleCount = data.filter(item => {
+        if (item.stage === 'conversion' || item.stage === 'retention') return false;
+        const leadDate = new Date(item.date);
+        return Math.floor((now - leadDate) / (1000 * 60 * 60 * 24)) >= 3;
+      }).length;
+
+      document.getElementById('statStaleLeads').innerText = staleCount;
+    }
+
+    function renderDashboardCharts() {
+      const data = getFilteredLeads();
+
+      // Chart 1: Funnel
+      const stages = ['awareness', 'consideration', 'conversion', 'retention', 'advocacy'];
+      const funnelCounts = stages.map(st => data.filter(d => d.stage === st).length);
+
+      if (funnelChartInstance) funnelChartInstance.destroy();
+      const ctx1 = document.getElementById('funnelChart').getContext('2d');
+      funnelChartInstance = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: ['1. Awareness', '2. Consideration', '3. Conversion', '4. Retention', '5. Advocacy'],
+          datasets: [{
+            label: 'Jumlah Lead',
+            data: funnelCounts,
+            backgroundColor: ['#0ea5e9', '#f59e0b', '#10b981', '#6366f1', '#f43f5e'],
+            borderRadius: 6
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+      });
+
+      // Chart 2: Source Revenue
+      const sources = ['Instagram', 'WhatsApp', 'Website', 'Referral', 'Marketplace', 'Lainnya'];
+      const sourceRevenues = sources.map(src => {
+        return data.filter(d => d.source === src)
+                   .reduce((acc, curr) => acc + Number(curr.value || 0), 0);
+      });
+
+      if (sourceChartInstance) sourceChartInstance.destroy();
+      const ctx2 = document.getElementById('sourceChart').getContext('2d');
+      sourceChartInstance = new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+          labels: sources,
+          datasets: [{
+            data: sourceRevenues,
+            backgroundColor: ['#e11d48', '#22c55e', '#3b82f6', '#a855f7', '#f97316', '#64748b']
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+
+      // Chart 3: Asked Products Demand Radar
+      const askedMap = {};
+      data.forEach(item => {
+        if (item.askedProduct) {
+          askedMap[item.askedProduct] = (askedMap[item.askedProduct] || 0) + 1;
+        }
+      });
+
+      const askedLabels = Object.keys(askedMap);
+      const askedValues = Object.values(askedMap);
+
+      if (askedProductChartInstance) askedProductChartInstance.destroy();
+      const ctx3 = document.getElementById('askedProductChart').getContext('2d');
+      askedProductChartInstance = new Chart(ctx3, {
+        type: 'bar',
+        data: {
+          labels: askedLabels.length ? askedLabels : ['Belum Ada Data'],
+          datasets: [{
+            label: 'Frekuensi Ditanyakan Customer',
+            data: askedValues.length ? askedValues : [0],
+            backgroundColor: '#f59e0b',
+            borderRadius: 6
+          }]
+        },
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+      });
+
+      // Top Selling Products Table Ranking
+      const soldMap = {};
+      data.forEach(item => {
+        if (item.productBought) {
+          if (!soldMap[item.productBought]) {
+            soldMap[item.productBought] = { qty: 0, revenue: 0 };
+          }
+          soldMap[item.productBought].qty += 1;
+          soldMap[item.productBought].revenue += Number(item.value || 0);
+        }
+      });
+
+      const sortedProducts = Object.keys(soldMap).map(k => ({
+        name: k,
+        qty: soldMap[k].qty,
+        revenue: soldMap[k].revenue
+      })).sort((a, b) => b.qty - a.qty);
+
+      const topTbody = document.getElementById('topProductsBody');
+      topTbody.innerHTML = '';
+      
+      if (sortedProducts.length === 0) {
+        topTbody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-slate-400">Belum ada transaksi closing terdata</td></tr>`;
+      } else {
+        sortedProducts.forEach((prod, index) => {
+          const tr = document.createElement('tr');
+          tr.className = 'border-b border-slate-100 hover:bg-slate-50';
+          tr.innerHTML = `
+            <td class="py-2.5 px-4 font-bold text-slate-500">${index + 1}</td>
+            <td class="py-2.5 px-4 font-semibold text-slate-800">${prod.name}</td>
+            <td class="py-2.5 px-4 text-center font-bold text-emerald-600">${prod.qty}</td>
+            <td class="py-2.5 px-4 text-right font-bold text-slate-800">${formatRp(prod.revenue)}</td>
+          `;
+          topTbody.appendChild(tr);
+        });
+      }
+    }
+
+    // 5. Product Catalog Functions
+    function renderProducts() {
+      const grid = document.getElementById('productListGrid');
+      grid.innerHTML = '';
+
+      products.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between hover:shadow-sm transition';
+        div.innerHTML = `
+          <div>
+            <div class="flex justify-between items-start mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">${p.category || 'Umum'}</span>
+              <button onclick="deleteProduct('${p.id}')" class="text-slate-400 hover:text-rose-600 text-xs"><i class="fa-solid fa-trash"></i></button>
+            </div>
+            <h4 class="font-bold text-slate-800 text-sm">${p.name}</h4>
+          </div>
+          <div class="mt-4 pt-2 border-t border-slate-200 flex justify-between items-center">
+            <span class="text-xs text-slate-500">Harga Standar</span>
+            <span class="font-bold text-slate-800 text-xs">${formatRp(p.price)}</span>
+          </div>
+        `;
+        grid.appendChild(div);
       });
     }
 
-    function applyFilters() {
-      renderPipeline();
-      renderTable();
+    function populateProductDropdown() {
+      const select = document.getElementById('leadProductBought');
+      select.innerHTML = `<option value="">-- Belum Beli / Belum Closing --</option>`;
+      products.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.name;
+        opt.innerText = `${p.name} (${formatRp(p.price)})`;
+        select.appendChild(opt);
+      });
     }
 
-    function resetFilters() {
-      document.getElementById('searchInput').value = '';
-      document.getElementById('filterSource').value = '';
-      document.getElementById('filterPic').value = '';
-      applyFilters();
+    function openAddProductModal() {
+      document.getElementById('productForm').reset();
+      document.getElementById('productModal').classList.remove('hidden');
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').classList.add('hidden');
+    }
+
+    function saveProduct(e) {
+      e.preventDefault();
+      const newP = {
+        id: 'p' + Date.now(),
+        name: document.getElementById('prodName').value,
+        price: Number(document.getElementById('prodPrice').value),
+        category: document.getElementById('prodCategory').value || 'Umum'
+      };
+
+      products.push(newP);
+      saveData();
+      populateProductDropdown();
+      renderProducts();
+      closeProductModal();
+    }
+
+    function deleteProduct(id) {
+      if (confirm('Hapus produk ini dari katalog?')) {
+        products = products.filter(p => p.id !== id);
+        saveData();
+        populateProductDropdown();
+        renderProducts();
+      }
+    }
+
+    function autoFillPrice() {
+      const pName = document.getElementById('leadProductBought').value;
+      const found = products.find(p => p.name === pName);
+      if (found) {
+        document.getElementById('leadValue').value = found.price;
+      }
+    }
+
+    // 6. Lead Modal Actions (Add / Edit / Delete)
+    function openLeadModal() {
+      document.getElementById('leadForm').reset();
+      document.getElementById('leadId').value = '';
+      document.getElementById('leadDate').value = new Date().toISOString().split('T')[0];
+      document.getElementById('modalLeadTitle').innerText = 'Input Data Lead / Customer Baru';
+      document.getElementById('leadModal').classList.remove('hidden');
     }
 
     function closeLeadModal() {
       document.getElementById('leadModal').classList.add('hidden');
     }
 
-    function populateAskedProductOptions(selectedVal = '') {
-      const select = document.getElementById('leadAskedProductSelect');
-      const customInput = document.getElementById('leadAskedProductCustom');
-      select.innerHTML = '<option value="">-- Pilih dari Katalog --</option>';
-
-      let isKnownInCatalog = false;
-      products.forEach(p => {
-        const selected = (selectedVal === p.name) ? 'selected' : '';
-        if (selectedVal === p.name) isKnownInCatalog = true;
-        select.innerHTML += `<option value="${escapeHtml(p.name)}" ${selected}>${escapeHtml(p.name)}</option>`;
-      });
-
-      select.innerHTML += `<option value="__custom__" ${(!isKnownInCatalog && selectedVal) ? 'selected' : ''}>+ Ketik Manual / Lainnya</option>`;
-
-      if (!isKnownInCatalog && selectedVal) {
-        customInput.value = selectedVal;
-      } else {
-        customInput.value = '';
-      }
-    }
-
-    function handleAskedProductSelectChange(selectEl) {
-      const customInput = document.getElementById('leadAskedProductCustom');
-      if (selectEl.value === '__custom__') {
-        customInput.focus();
-      } else if (selectEl.value) {
-        customInput.value = selectEl.value;
-      }
-    }
-
-    function addProductRow(itemData = null) {
-      const container = document.getElementById('productRowsContainer');
-      if (!container) return;
-      
-      const row = document.createElement('div');
-      row.className = 'flex items-center space-x-2 bg-white p-2 rounded-lg border border-slate-200';
-
-      let optionsHtml = '<option value="">-- Pilih Produk --</option>';
-      products.forEach(p => {
-        const selected = itemData && itemData.productId === p.id ? 'selected' : '';
-        optionsHtml += `<option value="${p.id}" data-price="${p.price}" ${selected}>${escapeHtml(p.name)} - Rp ${formatRupiah(p.price)}</option>`;
-      });
-
-      const qtyVal = itemData ? itemData.qty : 1;
-      const priceVal = itemData ? itemData.price : 0;
-
-      row.innerHTML = `
-        <select onchange="onProductSelectChange(this)" class="prod-select flex-1 px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs bg-white focus:ring-2 focus:ring-emerald-500">
-          ${optionsHtml}
-        </select>
-        <div class="w-16">
-          <input type="number" min="1" value="${qtyVal}" oninput="calculateLeadTotal()" class="prod-qty w-full px-2 py-1.5 border border-slate-300 rounded-lg text-xs text-center focus:ring-2 focus:ring-emerald-500" placeholder="Qty">
-        </div>
-        <div class="w-28">
-          <input type="number" min="0" value="${priceVal}" oninput="calculateLeadTotal()" class="prod-price w-full px-2 py-1.5 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-emerald-500" placeholder="Harga (Rp)">
-        </div>
-        <button type="button" onclick="removeProductRow(this)" class="text-slate-400 hover:text-rose-500 px-2 py-1 transition" title="Hapus Produk">
-          <i class="fa-solid fa-trash-can"></i>
-        </button>
-      `;
-
-      container.appendChild(row);
-      calculateLeadTotal();
-    }
-
-    function onProductSelectChange(selectEl) {
-      const selectedOption = selectEl.options[selectEl.selectedIndex];
-      const price = selectedOption ? parseFloat(selectedOption.getAttribute('data-price') || 0) : 0;
-      const row = selectEl.closest('div.flex');
-      if (row) {
-        const priceInput = row.querySelector('.prod-price');
-        if (priceInput) priceInput.value = price;
-      }
-      calculateLeadTotal();
-    }
-
-    function removeProductRow(btn) {
-      const container = document.getElementById('productRowsContainer');
-      if (container.children.length > 1) {
-        btn.closest('div.flex').remove();
-      } else {
-        const row = btn.closest('div.flex');
-        row.querySelector('.prod-select').value = '';
-        row.querySelector('.prod-qty').value = 1;
-        row.querySelector('.prod-price').value = 0;
-      }
-      calculateLeadTotal();
-    }
-
-    function calculateLeadTotal() {
-      let subtotal = 0;
-      const rows = document.querySelectorAll('#productRowsContainer > div');
-
-      rows.forEach(r => {
-        const qty = parseFloat(r.querySelector('.prod-qty')?.value || 0);
-        const price = parseFloat(r.querySelector('.prod-price')?.value || 0);
-        subtotal += (qty * price);
-      });
-
-      const discountType = document.getElementById('discountType')?.value || 'percent';
-      const discountVal = parseFloat(document.getElementById('discountValue')?.value || 0);
-
-      let discountAmount = 0;
-      if (discountType === 'percent') {
-        discountAmount = subtotal * (Math.min(100, Math.max(0, discountVal)) / 100);
-      } else {
-        discountAmount = Math.max(0, discountVal);
-      }
-
-      const finalPrice = Math.max(0, subtotal - discountAmount);
-
-      const subtotalLbl = document.getElementById('lblSubtotal');
-      const finalPriceLbl = document.getElementById('lblFinalPrice');
-
-      if (subtotalLbl) subtotalLbl.innerText = `Rp ${formatRupiah(subtotal)}`;
-      if (finalPriceLbl) finalPriceLbl.innerText = `Rp ${formatRupiah(finalPrice)}`;
-
-      return { subtotal, discountAmount, finalPrice };
-    }
-
-    function openLeadModal(leadToEdit = null) {
-      const modal = document.getElementById('leadModal');
-      const form = document.getElementById('leadForm');
-      form.reset();
-      document.getElementById('productRowsContainer').innerHTML = '';
-      
-      document.querySelectorAll('input[name="skinType"], input[name="hairType"]').forEach(cb => cb.checked = false);
-
-      if (leadToEdit) {
-        document.getElementById('modalLeadTitle').innerHTML = `<i class="fa-solid fa-pen-to-square text-emerald-400 mr-2"></i> Edit Data Lead`;
-        document.getElementById('leadId').value = leadToEdit.id;
-        document.getElementById('leadDate').value = leadToEdit.leadDate || (leadToEdit.createdAt ? leadToEdit.createdAt.slice(0, 10) : new Date().toISOString().slice(0, 10));
-        document.getElementById('leadName').value = leadToEdit.name;
-        document.getElementById('leadPhone').value = leadToEdit.phone;
-        document.getElementById('leadAddress').value = leadToEdit.address || '';
-        document.getElementById('discountType').value = leadToEdit.discountType || 'percent';
-        document.getElementById('discountValue').value = leadToEdit.discountVal || 0;
-        document.getElementById('leadSource').value = leadToEdit.leadSource;
-        document.getElementById('leadStage').value = leadToEdit.stage;
-        document.getElementById('leadPic').value = leadToEdit.pic;
-        document.getElementById('leadNotes').value = leadToEdit.notes || '';
-
-        populateAskedProductOptions(leadToEdit.askedProduct || '');
-
-        (leadToEdit.skinType || []).forEach(val => {
-          const cb = document.querySelector(`input[name="skinType"][value="${val}"]`);
-          if(cb) cb.checked = true;
-        });
-        (leadToEdit.hairType || []).forEach(val => {
-          const cb = document.querySelector(`input[name="hairType"][value="${val}"]`);
-          if(cb) cb.checked = true;
-        });
-
-        if (leadToEdit.items && leadToEdit.items.length > 0) {
-          leadToEdit.items.forEach(item => addProductRow(item));
-        } else {
-          addProductRow();
-        }
-      } else {
-        document.getElementById('modalLeadTitle').innerHTML = `<i class="fa-solid fa-user-plus text-emerald-400 mr-2"></i> Input Data Lead / Customer Baru`;
-        document.getElementById('leadId').value = '';
-        document.getElementById('leadDate').value = new Date().toISOString().slice(0, 10);
-        document.getElementById('leadPic').value = activeUser !== 'Admin' ? activeUser : 'Siti CS';
-        
-        populateAskedProductOptions('');
-        addProductRow();
-      }
-
-      calculateLeadTotal();
-      modal.classList.remove('hidden');
-    }
-
     function saveLead(e) {
       e.preventDefault();
-      const leadId = document.getElementById('leadId').value;
-      const leadDateVal = document.getElementById('leadDate').value || new Date().toISOString().slice(0, 10);
-      const name = document.getElementById('leadName').value.trim();
-      const phone = document.getElementById('leadPhone').value.trim();
-      const address = document.getElementById('leadAddress').value.trim();
-      const leadSource = document.getElementById('leadSource').value;
-      const stage = document.getElementById('leadStage').value;
-      const pic = document.getElementById('leadPic').value;
-      const notes = document.getElementById('leadNotes').value.trim();
+      const id = document.getElementById('leadId').value;
 
-      // Get Asked Product
-      const selectAsked = document.getElementById('leadAskedProductSelect').value;
-      const customAsked = document.getElementById('leadAskedProductCustom').value.trim();
-      let askedProduct = (selectAsked === '__custom__' || !selectAsked) ? customAsked : selectAsked;
-      if (!askedProduct) askedProduct = customAsked || 'Umum / Unspecified';
-
-      const skinType = Array.from(document.querySelectorAll('input[name="skinType"]:checked')).map(c => c.value);
-      const hairType = Array.from(document.querySelectorAll('input[name="hairType"]:checked')).map(c => c.value);
-
-      const items = [];
-      const rows = document.querySelectorAll('#productRowsContainer > div');
-      rows.forEach(r => {
-        const select = r.querySelector('.prod-select');
-        const qty = parseInt(r.querySelector('.prod-qty').value || 1);
-        const price = parseFloat(r.querySelector('.prod-price').value || 0);
-        const pName = select.options[select.selectedIndex]?.text.split(' - ')[0] || 'Custom Item';
-        if (select.value || price > 0) {
-          items.push({
-            productId: select.value || 'custom',
-            name: pName,
-            qty: qty,
-            price: price
-          });
-        }
-      });
-
-      const totals = calculateLeadTotal();
-
-      if (leadId) {
-        const lead = leads.find(l => l.id === leadId);
-        if (lead) {
-          const oldStage = lead.stage;
-          lead.leadDate = leadDateVal;
-          lead.name = name;
-          lead.phone = phone;
-          lead.address = address;
-          lead.askedProduct = askedProduct;
-          lead.items = items;
-          lead.discountType = document.getElementById('discountType').value;
-          lead.discountVal = parseFloat(document.getElementById('discountValue').value || 0);
-          lead.finalPrice = totals.finalPrice;
-          lead.skinType = skinType;
-          lead.hairType = hairType;
-          lead.leadSource = leadSource;
-          lead.pic = pic;
-          lead.notes = notes;
-          lead.updatedAt = new Date().toISOString();
-
-          if (oldStage !== stage) {
-            lead.stage = stage;
-            lead.history.push({
-              stage: stage,
-              changedBy: activeUser,
-              timestamp: new Date().toISOString(),
-              notes: `Diubah dari ${oldStage} ke ${stage}`
-            });
-          }
-        }
-      } else {
-        const newLead = {
-          id: 'L-' + Math.floor(1000 + Math.random() * 9000),
-          leadDate: leadDateVal,
-          name: name,
-          phone: phone,
-          address: address,
-          askedProduct: askedProduct,
-          items: items,
-          discountType: document.getElementById('discountType').value,
-          discountVal: parseFloat(document.getElementById('discountValue').value || 0),
-          finalPrice: totals.finalPrice,
-          skinType: skinType,
-          hairType: hairType,
-          stage: stage,
-          leadSource: leadSource,
-          notes: notes,
-          pic: pic,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          history: [
-            {
-              stage: stage,
-              changedBy: activeUser,
-              timestamp: new Date().toISOString(),
-              notes: 'Lead baru didaftarkan'
-            }
-          ]
-        };
-        leads.unshift(newLead);
-      }
-
-      saveLeadsToStorage();
-      closeLeadModal();
-      renderAllViews();
-      updateNotifications();
-    }
-
-    function openLeadDetail(id) {
-      currentSelectedLeadId = id;
-      const lead = leads.find(l => l.id === id);
-      if(!lead) return;
-
-      document.getElementById('detailName').innerText = lead.name;
-      document.getElementById('detailAvatar').innerText = lead.name.charAt(0).toUpperCase();
-      document.getElementById('detailSourceBadge').innerText = lead.leadSource;
-      document.getElementById('detailPhone').innerText = lead.phone;
-      
-      const primaryProduct = lead.askedProduct || ((lead.items && lead.items.length > 0) ? lead.items[0].name : 'produk kami');
-      const waMsg = `Halo ${lead.name}, bagaimana perkembangan konsultasi mengenai ${primaryProduct}?`;
-      document.getElementById('btnQuickWA').href = `https://wa.me/${cleanPhoneWA(lead.phone)}?text=${encodeURIComponent(waMsg)}`;
-      
-      document.getElementById('detailLeadDate').innerText = formatDateShort(lead.leadDate || lead.createdAt);
-      document.getElementById('detailAskedProduct').innerText = lead.askedProduct || '-';
-      document.getElementById('detailProducts').innerText = getLeadProductSummary(lead);
-      document.getElementById('detailPrice').innerText = `Rp ${formatRupiah(lead.finalPrice)}`;
-      document.getElementById('detailPic').innerText = lead.pic;
-      
-      const conditions = [];
-      if(lead.skinType && lead.skinType.length) conditions.push('Kulit: ' + lead.skinType.join(', '));
-      if(lead.hairType && lead.hairType.length) conditions.push('Rambut: ' + lead.hairType.join(', '));
-      document.getElementById('detailCondition').innerText = conditions.length ? conditions.join(' | ') : 'Tidak ada catatan kondisi';
-
-      document.getElementById('detailAddress').innerText = lead.address || '-';
-      document.getElementById('quickStageSelect').value = lead.stage;
-
-      const timeline = document.getElementById('historyTimeline');
-      timeline.innerHTML = '';
-
-      const historyArr = lead.history || [];
-      historyArr.slice().reverse().forEach((h, idx) => {
-        const item = document.createElement('div');
-        item.className = 'relative mb-3';
-        item.innerHTML = `
-          <div class="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full ${idx === 0 ? 'bg-emerald-500 ring-4 ring-emerald-100' : 'bg-slate-300'}"></div>
-          <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
-            <div class="flex justify-between items-center font-semibold text-slate-700">
-              <span class="uppercase text-[10px] bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded">${escapeHtml(h.stage)}</span>
-              <span class="text-[10px] text-slate-400 font-normal"><i class="fa-regular fa-clock mr-1"></i>${formatDateTime(h.timestamp)}</span>
-            </div>
-            <p class="text-slate-600 mt-1">${escapeHtml(h.notes || 'Status diperbarui')}</p>
-            <p class="text-[10px] text-slate-400 mt-1">Oleh Staff: <span class="font-medium text-slate-600">${escapeHtml(h.changedBy)}</span></p>
-          </div>
-        `;
-        timeline.appendChild(item);
-      });
-
-      document.getElementById('detailModal').classList.remove('hidden');
-    }
-
-    function closeDetailModal() {
-      document.getElementById('detailModal').classList.add('hidden');
-    }
-
-    function updateStageFromDetail() {
-      if(!currentSelectedLeadId) return;
-      const lead = leads.find(l => l.id === currentSelectedLeadId);
-      const newStage = document.getElementById('quickStageSelect').value;
-      
-      if(lead && lead.stage !== newStage) {
-        const oldStage = lead.stage;
-        lead.stage = newStage;
-        lead.updatedAt = new Date().toISOString();
-        if(!lead.history) lead.history = [];
-        lead.history.push({
-          stage: newStage,
-          changedBy: activeUser,
-          timestamp: new Date().toISOString(),
-          notes: `Pindah status manual ke ${newStage}`
-        });
-
-        saveLeadsToStorage();
-        openLeadDetail(lead.id);
-        renderAllViews();
-        updateNotifications();
-      }
-    }
-
-    function editCurrentLead() {
-      closeDetailModal();
-      const lead = leads.find(l => l.id === currentSelectedLeadId);
-      if(lead) openLeadModal(lead);
-    }
-
-    function deleteCurrentLead() {
-      if(!currentSelectedLeadId) return;
-      if(confirm('Apakah Anda yakin ingin menghapus data lead ini?')) {
-        leads = leads.filter(l => l.id !== currentSelectedLeadId);
-        saveLeadsToStorage();
-        closeDetailModal();
-        renderAllViews();
-        updateNotifications();
-      }
-    }
-
-    function renderDashboardCharts() {
-      const filtered = getFilteredLeads();
-
-      document.getElementById('statTotalLeads').innerText = filtered.length;
-
-      const totalSales = filtered
-        .filter(l => l.stage === 'conversion' || l.stage === 'retention' || l.stage === 'advocacy')
-        .reduce((sum, l) => sum + (l.finalPrice || 0), 0);
-      document.getElementById('statTotalSales').innerText = `Rp ${formatRupiah(totalSales)}`;
-
-      const conversions = filtered.filter(l => l.stage === 'conversion' || l.stage === 'retention' || l.stage === 'advocacy').length;
-      const convRate = filtered.length > 0 ? ((conversions / filtered.length) * 100).toFixed(1) : 0;
-      document.getElementById('statConversionRate').innerText = `${convRate}%`;
-
-      const staleCount = filtered.filter(l => isLeadStale(l)).length;
-      document.getElementById('statStaleLeads').innerText = staleCount;
-
-      // 1. Funnel Distribution Chart
-      const funnelCtx = document.getElementById('funnelChart').getContext('2d');
-      const stageCounts = { awareness: 0, consideration: 0, conversion: 0, retention: 0, advocacy: 0 };
-      filtered.forEach(l => { if(stageCounts[l.stage] !== undefined) stageCounts[l.stage]++; });
-
-      if (funnelChartInstance) funnelChartInstance.destroy();
-      funnelChartInstance = new Chart(funnelCtx, {
-        type: 'bar',
-        data: {
-          labels: ['Awareness', 'Consideration', 'Conversion', 'Retention', 'Advocacy'],
-          datasets: [{
-            label: 'Jumlah Lead',
-            data: [stageCounts.awareness, stageCounts.consideration, stageCounts.conversion, stageCounts.retention, stageCounts.advocacy],
-            backgroundColor: ['#38bdf8', '#f59e0b', '#10b981', '#6366f1', '#f43f5e'],
-            borderRadius: 8
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-        }
-      });
-
-      // 2. Revenue by Lead Source
-      const sourceCtx = document.getElementById('sourceChart').getContext('2d');
-      const sourceSales = {};
-      filtered.forEach(l => {
-        if(l.stage === 'conversion' || l.stage === 'retention' || l.stage === 'advocacy') {
-          sourceSales[l.leadSource] = (sourceSales[l.leadSource] || 0) + l.finalPrice;
-        }
-      });
-
-      if (sourceChartInstance) sourceChartInstance.destroy();
-      sourceChartInstance = new Chart(sourceCtx, {
-        type: 'doughnut',
-        data: {
-          labels: Object.keys(sourceSales).length ? Object.keys(sourceSales) : ['Belum Ada Transaksi'],
-          datasets: [{
-            data: Object.keys(sourceSales).length ? Object.values(sourceSales) : [1],
-            backgroundColor: ['#10b981', '#3b82f6', '#ec4899', '#8b5cf6', '#f59e0b', '#64748b']
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { position: 'right' } }
-        }
-      });
-
-      // 3. NEW CHART: Most Asked Products Analytics (Demand Radar)
-      const askedCtx = document.getElementById('askedProductChart').getContext('2d');
-      const askedCounts = {};
-      filtered.forEach(l => {
-        const prod = l.askedProduct || 'Belum Ditentukan';
-        askedCounts[prod] = (askedCounts[prod] || 0) + 1;
-      });
-
-      const sortedAsked = Object.keys(askedCounts)
-        .map(k => ({ name: k, count: askedCounts[k] }))
-        .sort((a,b) => b.count - a.count);
-
-      if (askedProductChartInstance) askedProductChartInstance.destroy();
-      askedProductChartInstance = new Chart(askedCtx, {
-        type: 'bar',
-        data: {
-          labels: sortedAsked.map(i => i.name),
-          datasets: [{
-            label: 'Jumlah Inquiries (Paling Banyak Ditanya)',
-            data: sortedAsked.map(i => i.count),
-            backgroundColor: '#f59e0b',
-            borderRadius: 6
-          }]
-        },
-        options: {
-          indexAxis: 'y', // Horizontal Bar Chart for easy reading
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } }
-        }
-      });
-
-      // 4. Top Products Sold Table
-      const prodRank = {};
-      filtered.forEach(l => {
-        if(l.items) {
-          l.items.forEach(it => {
-            if(!prodRank[it.name]) prodRank[it.name] = { qty: 0, revenue: 0 };
-            prodRank[it.name].qty += it.qty;
-            prodRank[it.name].revenue += (it.qty * it.price);
-          });
-        }
-      });
-
-      const sortedProds = Object.keys(prodRank).map(k => ({
-        name: k,
-        qty: prodRank[k].qty,
-        revenue: prodRank[k].revenue
-      })).sort((a,b) => b.qty - a.qty);
-
-      const topTbody = document.getElementById('topProductsBody');
-      topTbody.innerHTML = '';
-      sortedProds.forEach((p, i) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td class="py-2.5 px-4 font-bold text-slate-400">#${i+1}</td>
-          <td class="py-2.5 px-4 font-semibold text-slate-800">${escapeHtml(p.name)}</td>
-          <td class="py-2.5 px-4 text-center font-bold text-slate-700">${p.qty}</td>
-          <td class="py-2.5 px-4 text-right font-bold text-emerald-600">Rp ${formatRupiah(p.revenue)}</td>
-        `;
-        topTbody.appendChild(tr);
-      });
-    }
-
-    function renderProductsCatalog() {
-      const grid = document.getElementById('productListGrid');
-      grid.innerHTML = '';
-
-      products.forEach(p => {
-        const card = document.createElement('div');
-        card.className = 'bg-slate-50 border border-slate-200 rounded-xl p-4 flex justify-between items-center';
-        card.innerHTML = `
-          <div>
-            <h4 class="font-bold text-slate-800 text-xs">${escapeHtml(p.name)}</h4>
-            <p class="font-bold text-emerald-600 text-sm mt-1">Rp ${formatRupiah(p.price)}</p>
-          </div>
-          <button onclick="deleteProduct('${p.id}')" class="text-slate-400 hover:text-rose-500 p-2"><i class="fa-solid fa-trash"></i></button>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    function openAddProductModal() {
-      document.getElementById('productModal').classList.remove('hidden');
-    }
-    function closeAddProductModal() {
-      document.getElementById('productModal').classList.add('hidden');
-    }
-    function saveProduct(e) {
-      e.preventDefault();
-      const name = document.getElementById('newProdName').value.trim();
-      const price = parseFloat(document.getElementById('newProdPrice').value || 0);
-
-      products.push({ id: 'p_' + Date.now(), name, price });
-      localStorage.setItem('nexus_crm_products', JSON.stringify(products));
-      closeAddProductModal();
-      renderProductsCatalog();
-    }
-    function deleteProduct(id) {
-      if(confirm('Hapus produk ini dari katalog?')) {
-        products = products.filter(p => p.id !== id);
-        localStorage.setItem('nexus_crm_products', JSON.stringify(products));
-        renderProductsCatalog();
-      }
-    }
-
-    function exportToExcel() {
-      const dataToExport = getFilteredLeads().map(l => ({
-        'ID Lead': l.id,
-        'Tanggal Lead': formatDateShort(l.leadDate || l.createdAt),
-        'Nama Pelanggan': l.name,
-        'No WhatsApp': l.phone,
-        'Alamat': l.address || '',
-        'Produk Ditanya (Inquiry)': l.askedProduct || '',
-        'Produk Dibeli': getLeadProductSummary(l),
-        'Harga Akhir': l.finalPrice,
-        'Sumber': l.leadSource,
-        'Tahap Pipeline': l.stage,
-        'PIC Staff': l.pic,
-        'Catatan': l.notes || ''
-      }));
-
-      const worksheet = XLSX.utils.json_to_sheet(dataToExport);
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Lead CRM");
-      XLSX.writeFile(workbook, `NexusCRM_Leads_Export_${new Date().toISOString().slice(0,10)}.xlsx`);
-    }
-
-    function exportToCSV() {
-      const filtered = getFilteredLeads().map(l => ({
-        'ID': l.id,
-        'TanggalLead': formatDateShort(l.leadDate || l.createdAt),
-        'Nama': l.name,
-        'Telepon': l.phone,
-        'ProdukDitanya': l.askedProduct || '',
-        'ProdukDibeli': getLeadProductSummary(l),
-        'HargaAkhir': l.finalPrice,
-        'Sumber': l.leadSource,
-        'Tahap': l.stage,
-        'PIC': l.pic
-      }));
-      const csv = Papa.unparse(filtered);
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.setAttribute('download', `NexusCRM_Leads_${new Date().toISOString().slice(0,10)}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-    function handleFileImport(e) {
-      const file = e.target.files[0];
-      if(!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        const bstr = evt.target.result;
-        const workbook = XLSX.read(bstr, { type: 'binary' });
-        const firstSheetName = workbook.SheetNames[0];
-        const rawData = XLSX.utils.sheet_to_json(workbook.Sheets[firstSheetName]);
-
-        let importedCount = 0;
-        rawData.forEach((row) => {
-          const name = row['Nama Pelanggan'] || row['Nama'] || row['Name'];
-          const phone = row['No WhatsApp'] || row['Telepon'] || row['Phone'] || row['WA'];
-          const leadDate = row['Tanggal Lead'] || row['Tanggal'] || new Date().toISOString().slice(0, 10);
-          const askedProd = row['Produk Ditanya (Inquiry)'] || row['Produk Ditanya'] || row['Produk'] || 'Import Item';
-
-          if (name && phone) {
-            leads.unshift({
-              id: 'L-IMP-' + Math.floor(1000 + Math.random() * 9000),
-              leadDate: String(leadDate),
-              name: String(name),
-              phone: String(phone),
-              address: row['Alamat'] || '',
-              askedProduct: String(askedProd),
-              items: [{ productId: 'p1', name: row['Produk Dibeli'] || row['Produk'] || 'Produk Import', qty: 1, price: parseFloat(row['Harga Akhir'] || 0) }],
-              discountType: 'fixed',
-              discountVal: 0,
-              finalPrice: parseFloat(row['Harga Akhir'] || row['Harga'] || 0),
-              stage: (row['Tahap Pipeline'] || row['Tahap'] || 'awareness').toLowerCase(),
-              leadSource: row['Sumber'] || 'Import CSV',
-              notes: row['Catatan'] || 'Bulk Imported Data',
-              pic: row['PIC Staff'] || activeUser,
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-              history: [{ stage: 'awareness', changedBy: activeUser, timestamp: new Date().toISOString(), notes: 'Bulk Imported' }]
-            });
-            importedCount++;
-          }
-        });
-
-        saveLeadsToStorage();
-        renderAllViews();
-        alert(`Berhasil mengimpor ${importedCount} data lead!`);
+      const leadData = {
+        id: id || 'L' + Date.now(),
+        date: document.getElementById('leadDate').value,
+        name: document.getElementById('leadName').value,
+        phone: document.getElementById('leadPhone').value,
+        askedProduct: document.getElementById('leadAskedProduct').value,
+        source: document.getElementById('leadSource').value,
+        pic: document.getElementById('leadPic').value,
+        stage: document.getElementById('leadStage').value,
+        productBought: document.getElementById('leadProductBought').value,
+        value: Number(document.getElementById('leadValue').value || 0),
+        paymentStatus: document.getElementById('leadPaymentStatus').value,
+        notes: document.getElementById('leadNotes').value
       };
-      reader.readAsBinaryString(file);
+
+      if (id) {
+        const idx = leads.findIndex(l => l.id === id);
+        if (idx !== -1) leads[idx] = leadData;
+      } else {
+        leads.unshift(leadData);
+      }
+
+      saveData();
+      renderAll();
+      closeLeadModal();
     }
 
+    function editLead(id) {
+      const item = leads.find(l => l.id === id);
+      if (!item) return;
+
+      document.getElementById('leadId').value = item.id;
+      document.getElementById('leadDate').value = item.date;
+      document.getElementById('leadName').value = item.name;
+      document.getElementById('leadPhone').value = item.phone;
+      document.getElementById('leadAskedProduct').value = item.askedProduct || '';
+      document.getElementById('leadSource').value = item.source;
+      document.getElementById('leadPic').value = item.pic;
+      document.getElementById('leadStage').value = item.stage;
+      document.getElementById('leadProductBought').value = item.productBought || '';
+      document.getElementById('leadValue').value = item.value || 0;
+      document.getElementById('leadPaymentStatus').value = item.paymentStatus || 'Belum Bayar';
+      document.getElementById('leadNotes').value = item.notes || '';
+
+      document.getElementById('modalLeadTitle').innerText = 'Edit Data Lead';
+      document.getElementById('leadModal').classList.remove('hidden');
+    }
+
+    function deleteLead(id) {
+      if (confirm('Apakah Anda yakin ingin menghapus data lead ini?')) {
+        leads = leads.filter(l => l.id !== id);
+        saveData();
+        renderAll();
+      }
+    }
+
+    // 7. Google Sheets & Excel Sync
     function saveGSheetUrl() {
       const url = document.getElementById('gSheetWebhookUrl').value.trim();
-      if (!url) {
-        alert('Masukkan URL Webhook Google Apps Script terlebih dahulu.');
-        return;
-      }
-      localStorage.setItem('nexus_crm_gsheet_url', url);
-      alert('URL Google Apps Script berhasil disimpan!');
+      localStorage.setItem('nexus_gsheet_url', url);
+      gsheetWebhookUrl = url;
+      alert('URL Webhook Google Sheets berhasil disimpan!');
     }
 
     function toggleAutoSync(val) {
       autoSyncEnabled = val;
-      localStorage.setItem('nexus_crm_autosync', val ? 'true' : 'false');
+      localStorage.setItem('nexus_auto_sync', val);
     }
 
-    async function syncToGoogleSheets(isSilent = false) {
-      const url = (document.getElementById('gSheetWebhookUrl').value || localStorage.getItem('nexus_crm_gsheet_url') || '').trim();
-      if (!url) {
-        if (!isSilent) alert('Silakan masukkan URL Google Apps Script Webhook terlebih dahulu pada tab Integrasi.');
+    async function syncToGoogleSheets(silent = false) {
+      if (!gsheetWebhookUrl) {
+        if (!silent) alert('Silakan masukkan dan simpan URL Webhook Google Apps Script lebih dahulu!');
         return;
       }
 
       const statusEl = document.getElementById('gsheetSyncStatus');
-      if (statusEl) statusEl.innerHTML = '<span class="text-amber-600"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Menyinkronkan data ke Google Sheets...</span>';
+      if (statusEl) statusEl.innerText = 'Status: Mengirim data ke Google Sheets...';
 
       try {
-        const response = await fetch(url, {
+        await fetch(gsheetWebhookUrl, {
           method: 'POST',
-          mode: 'cors',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(leads)
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'push', data: leads })
         });
 
-        const result = await response.json();
-        if (result.status === 'success') {
-          const timeNow = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-          if (statusEl) statusEl.innerHTML = `<span class="text-emerald-600"><i class="fa-solid fa-circle-check mr-1"></i> Berhasil dikirim ke Google Sheets (${timeNow}) - ${leads.length} data</span>`;
-          if (!isSilent) alert(`Berhasil menyinkronkan ${leads.length} data lead ke Google Spreadsheet!`);
-        } else {
-          throw new Error(result.message || 'Gagal menyinkronkan');
-        }
+        if (statusEl) statusEl.innerText = 'Status: Terakhir tersinkronisasi (Push) pada ' + new Date().toLocaleTimeString();
+        if (!silent) alert('Data berhasil terkirim ke Google Sheets!');
       } catch (err) {
-        console.error('Gagal Sync AppsScript:', err);
-        if (statusEl) statusEl.innerHTML = `<span class="text-rose-600"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Gagal sync: Pastikan Web App disetting "Anyone" (Siapa saja)</span>`;
-        if (!isSilent) alert('Gagal terhubung ke Google Sheets. Pastikan deployment Web App Apps Script berizin "Anyone" (Siapa Saja).');
+        if (statusEl) statusEl.innerText = 'Status: Gagal Sinkronisasi';
+        if (!silent) alert('Gagal terhubung ke Google Sheets Webhook!');
       }
     }
 
     async function pullFromGoogleSheets() {
-      const url = (document.getElementById('gSheetWebhookUrl').value || localStorage.getItem('nexus_crm_gsheet_url') || '').trim();
-      if (!url) {
-        alert('Silakan masukkan URL Google Apps Script Webhook terlebih dahulu.');
+      if (!gsheetWebhookUrl) {
+        alert('Silakan masukkan URL Webhook Google Apps Script lebih dahulu!');
         return;
       }
 
       const statusEl = document.getElementById('gsheetSyncStatus');
-      if (statusEl) statusEl.innerHTML = '<span class="text-amber-600"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Mengunduh data dari Google Sheets...</span>';
+      if (statusEl) statusEl.innerText = 'Status: Menarik data terbaru...';
 
       try {
-        const response = await fetch(url + '?action=get', { method: 'GET' });
-        const result = await response.json();
-
-        if (result.status === 'success' && Array.isArray(result.data)) {
-          if (result.data.length > 0) {
-            leads = result.data;
-            saveLeadsToStorage();
-            renderAllViews();
-            updateNotifications();
-            const timeNow = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-            if (statusEl) statusEl.innerHTML = `<span class="text-emerald-600"><i class="fa-solid fa-circle-check mr-1"></i> Berhasil ditarik dari Sheets (${timeNow}) - Total ${result.data.length} lead</span>`;
-            alert(`Berhasil mengambil ${result.data.length} data lead dari Google Spreadsheet!`);
-          } else {
-            alert('Spreadsheet masih kosong atau belum ada data.');
-          }
-        } else {
-          throw new Error(result.message || 'Gagal menarik data');
+        const res = await fetch(`${gsheetWebhookUrl}?action=pull`);
+        const json = await res.json();
+        if (json && Array.isArray(json.data)) {
+          leads = json.data;
+          saveData();
+          renderAll();
+          if (statusEl) statusEl.innerText = 'Status: Terakhir diperbarui (Pull) pada ' + new Date().toLocaleTimeString();
+          alert('Data berhasil diperbarui dari Google Sheets!');
         }
       } catch (err) {
-        console.error('Gagal Pull AppsScript:', err);
-        if (statusEl) statusEl.innerHTML = `<span class="text-rose-600"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Gagal tarik data dari Google Sheets</span>`;
-        alert('Gagal mengambil data dari Google Sheets. Periksa URL Webhook Apps Script.');
+        if (statusEl) statusEl.innerText = 'Status: Gagal menarik data';
+        alert('Gagal mengambil data dari Google Sheets! Pastikan script mengembalikan JSON valid.');
       }
     }
 
-    function updateNotifications() {
-      const staleLeads = leads.filter(l => isLeadStale(l));
-      const badge = document.getElementById('notifBadge');
-      const countText = document.getElementById('notifCountText');
-      const notifList = document.getElementById('notifList');
+    // Export Excel & CSV
+    function exportToExcel() {
+      const dataToExport = getFilteredLeads();
+      const ws = XLSX.utils.json_to_sheet(dataToExport);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Leads Data");
+      XLSX.writeFile(wb, `NexusCRM_Leads_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
 
-      if (staleLeads.length > 0) {
-        badge.innerText = staleLeads.length;
-        badge.classList.remove('hidden');
-        countText.innerText = `${staleLeads.length} Lead Stagnan (>3 Hari)`;
+    function exportToCSV() {
+      const dataToExport = getFilteredLeads();
+      const csv = Papa.unparse(dataToExport);
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `NexusCRM_Leads_${new Date().toISOString().split('T')[0]}.csv`);
+      link.click();
+    }
+
+    // Import File Handling
+    function handleFileImport(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      const ext = file.name.split('.').pop().toLowerCase();
+
+      if (ext === 'csv') {
+        Papa.parse(file, {
+          header: true,
+          complete: function(results) {
+            mergeImportedData(results.data);
+          }
+        });
       } else {
-        badge.classList.add('hidden');
-        countText.innerText = 'Tidak ada lead stagnan';
-      }
-
-      notifList.innerHTML = '';
-      if (staleLeads.length === 0) {
-        notifList.innerHTML = `<div class="p-4 text-center text-slate-400">Semua lead sudah di-follow up dengan baik!</div>`;
-        return;
-      }
-
-      staleLeads.forEach(l => {
-        const days = Math.floor((Date.now() - new Date(l.updatedAt).getTime()) / (3600000 * 24));
-        const item = document.createElement('div');
-        item.className = 'p-3 hover:bg-slate-50 cursor-pointer transition flex items-center justify-between';
-        item.onclick = () => {
-          toggleNotifDropdown();
-          openLeadDetail(l.id);
+        reader.onload = function(evt) {
+          const data = new Uint8Array(evt.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const firstSheet = workbook.SheetNames[0];
+          const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[firstSheet]);
+          mergeImportedData(jsonData);
         };
-        item.innerHTML = `
-          <div>
-            <p class="font-bold text-slate-800 text-xs">${escapeHtml(l.name)}</p>
-            <p class="text-[10px] text-amber-600 font-medium">Ditanya: ${escapeHtml(l.askedProduct || '-')}</p>
-            <p class="text-[10px] text-slate-400">PIC: ${escapeHtml(l.pic)} • ${days} hari lalu</p>
-          </div>
-          <span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-[10px] font-bold">Follow Up</span>
-        `;
-        notifList.appendChild(item);
+        reader.readAsArrayBuffer(file);
+      }
+    }
+
+    function mergeImportedData(importedItems) {
+      let count = 0;
+      importedItems.forEach(row => {
+        if (row.name || row.Nama || row['Nama Pelanggan']) {
+          leads.push({
+            id: 'L' + Date.now() + Math.floor(Math.random()*1000),
+            date: row.date || row.Tanggal || new Date().toISOString().split('T')[0],
+            name: row.name || row.Nama || row['Nama Pelanggan'],
+            phone: String(row.phone || row.HP || row.WhatsApp || ''),
+            askedProduct: row.askedProduct || row['Produk Ditanya'] || '',
+            source: row.source || row.Sumber || 'Import',
+            pic: row.pic || row.PIC || activeUser,
+            stage: row.stage || row.Stage || 'awareness',
+            productBought: row.productBought || row['Produk Dibeli'] || '',
+            value: Number(row.value || row.Harga || row.Total || 0),
+            paymentStatus: row.paymentStatus || 'Lunas',
+            notes: row.notes || row.Catatan || 'Bulk Imported'
+          });
+          count++;
+        }
       });
-    }
 
-    function toggleNotifDropdown() {
-      const dropdown = document.getElementById('notifDropdown');
-      dropdown.classList.toggle('hidden');
-    }
-
-    function isLeadStale(lead) {
-      if (lead.stage === 'conversion' || lead.stage === 'retention' || lead.stage === 'advocacy') return false;
-      const lastUpdate = new Date(lead.updatedAt || lead.createdAt).getTime();
-      const diffDays = (Date.now() - lastUpdate) / (1000 * 3600 * 24);
-      return diffDays >= 3;
-    }
-
-    function getLeadProductSummary(lead) {
-      if (!lead.items || lead.items.length === 0) return 'Belum Beli';
-      return lead.items.map(i => `${i.name} (x${i.qty})`).join(', ');
-    }
-
-    function formatRupiah(num) {
-      return (num || 0).toLocaleString('id-ID');
-    }
-
-    function formatDateShort(dateStr) {
-      if (!dateStr) return '-';
-      try {
-        const d = new Date(dateStr);
-        if (isNaN(d.getTime())) return dateStr;
-        return d.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
-      } catch(e) {
-        return dateStr;
-      }
-    }
-
-    function formatDateTime(dateStr) {
-      if (!dateStr) return '-';
-      try {
-        const d = new Date(dateStr);
-        return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' }) + ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-      } catch(e) {
-        return dateStr;
-      }
-    }
-
-    function cleanPhoneWA(phone) {
-      if (!phone) return '';
-      let clean = phone.replace(/[^0-9]/g, '');
-      if (clean.startsWith('0')) clean = '62' + clean.slice(1);
-      return clean;
-    }
-
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+      saveData();
+      renderAll();
+      alert(`Berhasil mengimpor ${count} data lead baru!`);
     }
   </script>
 </body>
