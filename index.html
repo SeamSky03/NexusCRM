@@ -662,7 +662,7 @@
 
         <div>
           <label class="block font-semibold text-slate-700 mb-1">Kategori Produk</label>
-          <input type="text" id="prodCategory" placeholder="Contoh: Skincare, Elektronik, Jasa" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
+          <input type="text" id="prodCategory" placeholder="Contoh: Skincare, Essential Oil, Aksesoris" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
         </div>
 
         <div class="flex justify-end space-x-3 pt-3 border-t border-slate-200">
@@ -675,17 +675,48 @@
 
   <!-- JAVASCRIPT APP LOGIC -->
   <script>
-    // Initial State & Initial Dummy Data
+    // Initial State & Initial Data dari Gambar
     let activeUser = 'Admin';
     let gsheetWebhookUrl = localStorage.getItem('nexus_gsheet_url') || '';
     let autoSyncEnabled = localStorage.getItem('nexus_auto_sync') === 'true';
 
-    let products = JSON.parse(localStorage.getItem('nexus_products')) || [
-      { id: 'p1', name: 'Paket Basic Skincare', price: 150000, category: 'Skincare' },
-      { id: 'p2', name: 'Paket Ultimate Glow', price: 350000, category: 'Skincare' },
-      { id: 'p3', name: 'Serum Anti Aging Extra', price: 210000, category: 'Serum' },
-      { id: 'p4', name: 'Susu Nutrisi Premium', price: 180000, category: 'Health' }
+    let defaultProducts = [
+      { id: 'p1', name: 'Signature Body Butter 5 gr', price: 25000, category: 'Body Care' },
+      { id: 'p2', name: 'Signature Body Butter 50 gr', price: 194000, category: 'Body Care' },
+      { id: 'p3', name: 'Signature Body Butter 75 gr', price: 279000, category: 'Body Care' },
+      { id: 'p4', name: 'Signature Deodorant 30 gr', price: 148000, category: 'Body Care' },
+      { id: 'p5', name: 'Signature Deodorant 5 gr', price: 25000, category: 'Body Care' },
+      { id: 'p6', name: 'Hydro Body Serum 180 ml', price: 189000, category: 'Body Care' },
+      { id: 'p7', name: 'Ocean Pure 100 ml', price: 179000, category: 'Body Care' },
+      { id: 'p8', name: 'Botanical Hair Mask 100 gr', price: 182000, category: 'Hair Care' },
+      { id: 'p9', name: 'Frizz Away Shampoo 30 ml', price: 35000, category: 'Hair Care' },
+      { id: 'p10', name: 'Frizz Away Shampoo 180 ml', price: 197000, category: 'Hair Care' },
+      { id: 'p11', name: 'Frizz Away Shampoo 450 ml', price: 384000, category: 'Hair Care' },
+      { id: 'p12', name: 'Gentle and Mild Head To Toe Wash 30 ml', price: 35000, category: 'Body Care' },
+      { id: 'p13', name: 'Gentle and Mild Head To Toe Wash 180 ml', price: 197000, category: 'Body Care' },
+      { id: 'p14', name: 'Gentle and Mild Head To Toe Wash 450 ml', price: 384000, category: 'Body Care' },
+      { id: 'p15', name: 'Moisturizing Stick 10gr', price: 50000, category: 'Skincare' },
+      { id: 'p16', name: 'Signature Coffe Scrub 95 gr', price: 172000, category: 'Body Care' },
+      { id: 'p17', name: 'Eo Pure - Warm Hug', price: 130000, category: 'Essential Oil' },
+      { id: 'p18', name: 'Eo Pure - Inner Peace', price: 130000, category: 'Essential Oil' },
+      { id: 'p19', name: 'Eo Pure - Be Brave', price: 130000, category: 'Essential Oil' },
+      { id: 'p20', name: 'Eo Pure - Mindfullnes', price: 130000, category: 'Essential Oil' },
+      { id: 'p21', name: 'Eo Pure - Quick Joy', price: 130000, category: 'Essential Oil' },
+      { id: 'p22', name: 'Eo Pure - Quick Sleep', price: 130000, category: 'Essential Oil' },
+      { id: 'p23', name: 'Eo Pure - Brain Reset', price: 130000, category: 'Essential Oil' },
+      { id: 'p24', name: 'Eo Pure - Wake Up', price: 130000, category: 'Essential Oil' },
+      { id: 'p25', name: 'Eo Roller- Quick Joy', price: 100000, category: 'Essential Oil' },
+      { id: 'p26', name: 'Eo Roller- Quick sleep', price: 100000, category: 'Essential Oil' },
+      { id: 'p27', name: 'Eo Roller- Be Brave', price: 100000, category: 'Essential Oil' },
+      { id: 'p28', name: 'Eo Roller- Brain Reset', price: 100000, category: 'Essential Oil' },
+      { id: 'p29', name: 'Eo Parfume - Verde Essence Hydro', price: 139000, category: 'Parfume' },
+      { id: 'p30', name: 'Eo Parfume - Jardin Lumiere Hairmask', price: 145000, category: 'Parfume' },
+      { id: 'p31', name: 'Eo Parfum - Divine Resin Frizzy', price: 139000, category: 'Parfume' },
+      { id: 'p32', name: 'Scented Candle', price: 30000, category: 'Aksesoris' },
+      { id: 'p33', name: 'Dompet EO Werkin', price: 100000, category: 'Aksesoris' }
     ];
+
+    let products = JSON.parse(localStorage.getItem('nexus_products')) || defaultProducts;
 
     let leads = JSON.parse(localStorage.getItem('nexus_leads')) || [
       {
@@ -694,9 +725,9 @@
         name: 'Andi Wijaya',
         phone: '081234567890',
         source: 'Instagram',
-        askedProduct: 'Paket Ultimate Glow',
-        productBought: 'Paket Ultimate Glow',
-        value: 350000,
+        askedProduct: 'Hydro Body Serum 180 ml',
+        productBought: 'Hydro Body Serum 180 ml',
+        value: 189000,
         stage: 'conversion',
         pic: 'Siti CS',
         paymentStatus: 'Lunas',
@@ -708,7 +739,7 @@
         name: 'Rina Melati',
         phone: '085711223344',
         source: 'WhatsApp',
-        askedProduct: 'Serum Anti Aging',
+        askedProduct: 'Eo Pure - Quick Sleep',
         productBought: '',
         value: 0,
         stage: 'awareness',
@@ -722,9 +753,9 @@
         name: 'Dewi Lestari',
         phone: '081987654321',
         source: 'Website',
-        askedProduct: 'Susu Nutrisi Premium',
-        productBought: 'Susu Nutrisi Premium',
-        value: 180000,
+        askedProduct: 'Botanical Hair Mask 100 gr',
+        productBought: 'Botanical Hair Mask 100 gr',
+        value: 182000,
         stage: 'retention',
         pic: 'Maya CS',
         paymentStatus: 'Lunas',
@@ -736,7 +767,7 @@
         name: 'Hendro Prasetyo',
         phone: '082144556677',
         source: 'Referral',
-        askedProduct: 'Paket Basic Skincare',
+        askedProduct: 'Signature Body Butter 50 gr',
         productBought: '',
         value: 0,
         stage: 'consideration',
