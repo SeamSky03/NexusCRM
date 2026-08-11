@@ -60,7 +60,7 @@
         <!-- Logo & Title -->
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center font-bold text-xl shadow-lg shadow-emerald-500/30">
-            <i class="fa-solid me-0 fa-chart-line text-white"></i>
+            <i class="fa-solid fa-chart-line text-white"></i>
           </div>
           <div>
             <h1 class="font-bold text-lg leading-none tracking-tight">Nexus<span class="text-emerald-400">CRM</span></h1>
@@ -134,13 +134,13 @@
   <!-- Main Container -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
-    <!-- Global Filter & Search Bar (Visible in Pipeline & Table views) -->
+    <!-- Global Filter & Search Bar -->
     <div id="filterBar" class="bg-white rounded-xl shadow-sm border border-slate-200 p-3.5 mb-6">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3">
         <!-- Search Input -->
         <div class="relative md:col-span-2">
           <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
-          <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Cari nama, HP, produk, catatan..." class="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
+          <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Cari nama, HP, produk ditanya, catatan..." class="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white transition">
         </div>
         <!-- Source Filter -->
         <div>
@@ -264,10 +264,11 @@
           <table class="w-full text-left text-xs text-slate-600">
             <thead class="bg-slate-100 text-slate-700 font-semibold uppercase tracking-wider text-[11px] border-b border-slate-200">
               <tr>
-                <th class="py-3 px-4">Tanggal</th>
+                <th class="py-3 px-4">Tgl Lead</th>
                 <th class="py-3 px-4">Nama Pelanggan</th>
                 <th class="py-3 px-4">WhatsApp / HP</th>
                 <th class="py-3 px-4">Sumber</th>
+                <th class="py-3 px-4"><i class="fa-solid fa-circle-question text-amber-500 mr-1"></i> Produk Ditanya</th>
                 <th class="py-3 px-4">Produk Dibeli</th>
                 <th class="py-3 px-4 text-right">Harga Akhir</th>
                 <th class="py-3 px-4">Tahap Pipeline</th>
@@ -356,26 +357,46 @@
         </div>
       </div>
 
-      <!-- Top Products Ranking Table -->
-      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-        <h3 class="font-bold text-slate-700 text-sm mb-4 flex items-center">
-          <i class="fa-solid fa-trophy text-amber-500 mr-2"></i> Ranking Produk Terlaris
-        </h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs text-slate-600">
-            <thead class="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200">
-              <tr>
-                <th class="py-2.5 px-4">#</th>
-                <th class="py-2.5 px-4">Nama Produk</th>
-                <th class="py-2.5 px-4 text-center">Jumlah Terjual (Qty)</th>
-                <th class="py-2.5 px-4 text-right">Total Revenue Generated</th>
-              </tr>
-            </thead>
-            <tbody id="topProductsBody" class="divide-y divide-slate-100">
-              <!-- Top products dynamic -->
-            </tbody>
-          </table>
+      <!-- Analytics Section for "Produk Ditanya" vs "Produk Terlaris" -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        
+        <!-- NEW CHART: Most Asked Products Analytics -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-slate-700 text-sm flex items-center">
+              <i class="fa-solid fa-comments text-amber-500 mr-2"></i> Produk Paling Banyak Ditanya / Dicari Customer
+            </h3>
+            <span class="text-[10px] bg-amber-50 text-amber-700 px-2 py-0.5 rounded font-semibold border border-amber-200">Demand Radar</span>
+          </div>
+          <div class="h-64 relative">
+            <canvas id="askedProductChart"></canvas>
+          </div>
         </div>
+
+        <!-- Top Selling Products Ranking Table -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-slate-700 text-sm mb-4 flex items-center">
+              <i class="fa-solid fa-trophy text-amber-500 mr-2"></i> Ranking Produk Terlaris (Closing)
+            </h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs text-slate-600">
+                <thead class="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200">
+                  <tr>
+                    <th class="py-2.5 px-4">#</th>
+                    <th class="py-2.5 px-4">Nama Produk</th>
+                    <th class="py-2.5 px-4 text-center">Jumlah Terjual (Qty)</th>
+                    <th class="py-2.5 px-4 text-right">Total Revenue</th>
+                  </tr>
+                </thead>
+                <tbody id="topProductsBody" class="divide-y divide-slate-100">
+                  <!-- Top products dynamic -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -403,7 +424,7 @@
     <div id="view-import-export" class="tab-content hidden">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-        <!-- Google Sheets Direct Sync Config (HIGHLIGHTED) -->
+        <!-- Google Sheets Direct Sync Config -->
         <div class="bg-white p-6 rounded-xl border-2 border-emerald-500 shadow-md lg:col-span-2 relative overflow-hidden">
           <div class="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
             Integrasi Langsung 2-Arah
@@ -492,7 +513,6 @@
 
   </main>
 
-  
   <!-- MODAL 1: ADD / EDIT LEAD -->
   <div id="leadModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
     <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform transition-all my-8">
@@ -509,10 +529,12 @@
         <input type="hidden" id="leadId">
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <!-- Tanggal Input -->
+          <!-- Tanggal Input (DAPAT DIPILIH & DIEDIT) -->
           <div>
-            <label class="block font-semibold text-slate-700 mb-1">Tanggal Lead <span class="text-rose-500">*</span></label>
-            <input type="date" id="leadDate" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white">
+            <label class="block font-semibold text-slate-700 mb-1">
+              <i class="fa-regular fa-calendar text-emerald-600 mr-1"></i> Tanggal Lead <span class="text-rose-500">*</span>
+            </label>
+            <input type="date" id="leadDate" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white font-medium">
           </div>
 
           <!-- Nama Customer -->
@@ -525,6 +547,25 @@
           <div>
             <label class="block font-semibold text-slate-700 mb-1">Nomor HP / WhatsApp <span class="text-rose-500">*</span></label>
             <input type="tel" id="leadPhone" required placeholder="Contoh: 08123456789" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
+          </div>
+        </div>
+
+        <!-- NEW FIELD: Produk yang Ditanya (Inquired Product) -->
+        <div class="bg-amber-50/70 p-3.5 rounded-xl border border-amber-200/80 space-y-2">
+          <label class="font-bold text-amber-900 block text-xs flex items-center">
+            <i class="fa-solid fa-comments text-amber-600 mr-1.5 text-sm"></i> Produk yang Ditanya Customer (Inquiry) <span class="text-rose-500 ml-1">*</span>
+          </label>
+          <p class="text-[11px] text-amber-700">Pilih atau ketik produk yang pertama kali ditanyakan customer untuk analisis riset pasar.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div>
+              <select id="leadAskedProductSelect" onchange="handleAskedProductSelectChange(this)" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 bg-white font-medium">
+                <option value="">-- Pilih dari Katalog --</option>
+                <!-- Dynamically populated options from products array + 'Custom / Lainnya' -->
+              </select>
+            </div>
+            <div>
+              <input type="text" id="leadAskedProductCustom" placeholder="Atau ketik nama produk ditanya..." class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 bg-white">
+            </div>
           </div>
         </div>
 
@@ -577,7 +618,7 @@
         <!-- Products Selector (Multiple Items supported) -->
         <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
           <div class="flex justify-between items-center mb-2">
-            <label class="font-bold text-slate-700">Produk yang Dibeli / Minat <span class="text-rose-500">*</span></label>
+            <label class="font-bold text-slate-700">Produk yang Dibeli / Minat Fix <span class="text-rose-500">*</span></label>
             <button type="button" onclick="addProductRow()" class="text-emerald-600 hover:text-emerald-700 font-semibold flex items-center">
               <i class="fa-solid fa-plus-circle mr-1"></i> Tambah Produk
             </button>
@@ -665,7 +706,6 @@
     </div>
   </div>
 
-
   <!-- MODAL 2: LEAD DETAIL & STAGE HISTORY TIMELINE -->
   <div id="detailModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
     <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden my-8">
@@ -694,6 +734,14 @@
 
         <!-- Details Grid -->
         <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <div>
+            <p class="text-slate-400 text-[11px]">Tanggal Lead:</p>
+            <p id="detailLeadDate" class="font-bold text-slate-800 text-xs mt-0.5"></p>
+          </div>
+          <div>
+            <p class="text-slate-400 text-[11px]">Produk Ditanya (Inquiry):</p>
+            <p id="detailAskedProduct" class="font-bold text-amber-600 text-xs mt-0.5"></p>
+          </div>
           <div>
             <p class="text-slate-400 text-[11px]">Produk Dibeli:</p>
             <p id="detailProducts" class="font-semibold text-slate-800 text-xs mt-0.5"></p>
@@ -755,7 +803,6 @@
     </div>
   </div>
 
-
   <!-- MODAL 3: ADD PRODUCT -->
   <div id="productModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden">
@@ -794,15 +841,18 @@
     let currentSelectedLeadId = null;
     let funnelChartInstance = null;
     let sourceChartInstance = null;
+    let askedProductChartInstance = null;
     let autoSyncEnabled = false;
 
-    // Default Initial Dummy Leads with Skin & Hair Type
+    // Seed Data with Lead Dates and Inquired Product (askedProduct)
     const initialSeedLeads = [
       {
         id: 'L-101',
+        leadDate: '2026-08-07',
         name: 'Anita Wijaya',
         phone: '081298765432',
         address: 'Jl. Melati No 45, Bandung',
+        askedProduct: 'Cocoa Body Butter',
         items: [{ productId: 'p5', name: 'Cocoa Body Butter', qty: 1, price: 135000 }],
         discountType: 'percent',
         discountVal: 10,
@@ -821,9 +871,11 @@
       },
       {
         id: 'L-102',
+        leadDate: '2026-08-06',
         name: 'Rudi Hermawan',
         phone: '085711223344',
         address: 'Kebayoran Baru, Jakarta Selatan',
+        askedProduct: 'Paket Skincare Glow',
         items: [
           { productId: 'p1', name: 'Paket Skincare Glow', qty: 1, price: 250000 },
           { productId: 'p2', name: 'Serum Anti Aging', qty: 1, price: 175000 }
@@ -846,9 +898,11 @@
       },
       {
         id: 'L-103',
+        leadDate: '2026-08-10',
         name: 'Dewi Lestari',
         phone: '081388990011',
         address: 'Surabaya Timur, Jatim',
+        askedProduct: 'Serum Anti Aging',
         items: [{ productId: 'p3', name: 'Facial Wash Herbal', qty: 2, price: 85000 }],
         discountType: 'percent',
         discountVal: 0,
@@ -857,7 +911,7 @@
         hairType: ['Mengembang'],
         stage: 'conversion',
         leadSource: 'Marketplace',
-        notes: 'Pembayaran Lunas via BCA Transfer',
+        notes: 'Awalnya tanya Serum, tapi checkout Facial Wash',
         pic: 'Maya CS',
         createdAt: new Date(Date.now() - 3600000 * 12).toISOString(),
         updatedAt: new Date(Date.now() - 3600000 * 2).toISOString(),
@@ -865,6 +919,29 @@
           { stage: 'awareness', changedBy: 'Maya CS', timestamp: new Date(Date.now() - 3600000 * 12).toISOString(), notes: 'Tanya stok' },
           { stage: 'consideration', changedBy: 'Maya CS', timestamp: new Date(Date.now() - 3600000 * 5).toISOString(), notes: 'Checkout shopee' },
           { stage: 'conversion', changedBy: 'Maya CS', timestamp: new Date(Date.now() - 3600000 * 2).toISOString(), notes: 'Lunas & Kirim' }
+        ]
+      },
+      {
+        id: 'L-104',
+        leadDate: '2026-08-11',
+        name: 'Fikri Ramadhan',
+        phone: '082199887766',
+        address: 'Tangerang Kota',
+        askedProduct: 'Serum Anti Aging',
+        items: [{ productId: 'p2', name: 'Serum Anti Aging', qty: 1, price: 175000 }],
+        discountType: 'percent',
+        discountVal: 0,
+        finalPrice: 175000,
+        skinType: ['Sensitif'],
+        hairType: [],
+        stage: 'awareness',
+        leadSource: 'Instagram',
+        notes: 'Tanya promo serum untuk pemakaian pertama',
+        pic: 'Siti CS',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        history: [
+          { stage: 'awareness', changedBy: 'Siti CS', timestamp: new Date().toISOString(), notes: 'Lead baru masuk' }
         ]
       }
     ];
@@ -880,7 +957,20 @@
     function loadStoredData() {
       const storedLeads = localStorage.getItem('nexus_crm_leads');
       if (storedLeads) {
-        try { leads = JSON.parse(storedLeads); } catch(e) { leads = initialSeedLeads; }
+        try { 
+          leads = JSON.parse(storedLeads);
+          // Ensure leadDate field exists for older items
+          leads.forEach(l => {
+            if(!l.leadDate) {
+              l.leadDate = l.createdAt ? l.createdAt.slice(0, 10) : new Date().toISOString().slice(0, 10);
+            }
+            if(!l.askedProduct) {
+              l.askedProduct = (l.items && l.items.length > 0) ? l.items[0].name : 'Belum Ditentukan';
+            }
+          });
+        } catch(e) { 
+          leads = initialSeedLeads; 
+        }
       } else {
         leads = initialSeedLeads;
         saveLeadsToStorage();
@@ -915,7 +1005,6 @@
       }
     }
 
-    /* Real-Time Listener */
     function initRealtimeSyncPolling() {
       if (window.BroadcastChannel) {
         const bc = new BroadcastChannel('nexus_crm_channel');
@@ -932,13 +1021,18 @@
       }, 30000);
     }
 
-    /* User Role Switcher */
+    function renderAllViews() {
+      renderPipeline();
+      renderTable();
+      renderDashboardCharts();
+      renderProductsCatalog();
+    }
+
     function changeActiveUser(val) {
       activeUser = val;
       renderAllViews();
     }
 
-    /* Tab Switcher */
     function switchTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -958,7 +1052,6 @@
       }
     }
 
-    /* Render Kanban Pipeline */
     function renderPipeline() {
       const stages = ['awareness', 'consideration', 'conversion', 'retention', 'advocacy'];
       
@@ -989,18 +1082,16 @@
           const isStale = isLeadStale(lead);
           const prodSummary = getLeadProductSummary(lead);
 
-          // WhatsApp Click-to-Chat Template Message
-          const primaryProduct = (lead.items && lead.items.length > 0) ? lead.items[0].name : 'produk kami';
-          const waMsg = `Halo ${lead.name}, bagaimana perkembangan kulitnya setelah menggunakan ${primaryProduct}?`;
+          const primaryProduct = lead.askedProduct || ((lead.items && lead.items.length > 0) ? lead.items[0].name : 'produk kami');
+          const waMsg = `Halo ${lead.name}, bagaimana perkembangan konsultasi mengenai ${primaryProduct}?`;
           const waUrl = `https://wa.me/${cleanPhoneWA(lead.phone)}?text=${encodeURIComponent(waMsg)}`;
 
-          // Badges for Skin & Hair conditions
           const skinBadges = (lead.skinType || []).map(s => `<span class="bg-rose-50 text-rose-600 px-1.5 py-0.5 rounded text-[9px] font-semibold border border-rose-100"><i class="fa-solid fa-droplet text-[8px] mr-0.5"></i>${escapeHtml(s)}</span>`).join('');
           const hairBadges = (lead.hairType || []).map(h => `<span class="bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded text-[9px] font-semibold border border-purple-100"><i class="fa-solid fa-scissors text-[8px] mr-0.5"></i>${escapeHtml(h)}</span>`).join('');
 
           card.innerHTML = `
             ${isStale ? `<span class="absolute -top-1 -right-1 bg-amber-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow z-10" title="Belum diupdate > 3 hari"><i class="fa-solid fa-clock mr-0.5"></i> Follow-Up</span>` : ''}
-            <div class="flex justify-between items-start mb-1.5">
+            <div class="flex justify-between items-start mb-1">
               <span class="font-bold text-slate-800 text-xs truncate max-w-[110px]">${escapeHtml(lead.name)}</span>
               <div class="flex items-center space-x-1">
                 <a href="${waUrl}" target="_blank" onclick="event.stopPropagation()" class="w-6 h-6 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center text-xs shadow hover:scale-110 transition-all" title="Chat WA: ${escapeHtml(waMsg)}">
@@ -1009,8 +1100,17 @@
                 <span class="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100">Rp ${formatRupiah(lead.finalPrice)}</span>
               </div>
             </div>
+
+            <!-- Display Lead Date & Asked Product Badge -->
+            <div class="flex items-center justify-between text-[10px] my-1 font-medium">
+              <span class="text-slate-400"><i class="fa-regular fa-calendar mr-1"></i>${formatDateShort(lead.leadDate)}</span>
+              <span class="bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded border border-amber-200 text-[10px] font-semibold truncate max-w-[110px]" title="Ditanya: ${escapeHtml(lead.askedProduct || '-')}">
+                <i class="fa-solid fa-comments text-amber-500 mr-1"></i>${escapeHtml(lead.askedProduct || '-')}
+              </span>
+            </div>
+
             <p class="text-[11px] text-slate-500 truncate mb-1">
-              <i class="fa-solid fa-box text-slate-400 mr-1"></i>${prodSummary}
+              <i class="fa-solid fa-box text-slate-400 mr-1"></i><span class="font-medium text-slate-700">Dibeli:</span> ${prodSummary}
             </p>
             
             ${(skinBadges || hairBadges) ? `<div class="flex flex-wrap gap-1 my-1.5">${skinBadges}${hairBadges}</div>` : ''}
@@ -1030,7 +1130,6 @@
       });
     }
 
-    /* Drag and Drop Handlers */
     function handleDragStart(e, id) {
       e.dataTransfer.setData('text/plain', id);
       e.target.classList.add('dragging');
@@ -1071,7 +1170,6 @@
       }
     }
 
-    /* Render Lead Table View */
     function renderTable() {
       const tbody = document.getElementById('leadTableBody');
       tbody.innerHTML = '';
@@ -1092,14 +1190,21 @@
         };
 
         tr.innerHTML = `
-          <td class="py-3 px-4 text-slate-500">${formatDateShort(lead.createdAt)}</td>
+          <td class="py-3 px-4 text-slate-700 font-medium whitespace-nowrap">
+            <i class="fa-regular fa-calendar text-slate-400 mr-1"></i>${formatDateShort(lead.leadDate || lead.createdAt)}
+          </td>
           <td class="py-3 px-4 font-bold text-slate-800">${escapeHtml(lead.name)}</td>
-          <td class="py-3 px-4 text-emerald-600 font-medium">
+          <td class="py-3 px-4 text-emerald-600 font-medium whitespace-nowrap">
             <a href="https://wa.me/${cleanPhoneWA(lead.phone)}" target="_blank" class="hover:underline flex items-center">
               <i class="fa-brands fa-whatsapp text-sm mr-1"></i> ${escapeHtml(lead.phone)}
             </a>
           </td>
           <td class="py-3 px-4"><span class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded">${escapeHtml(lead.leadSource)}</span></td>
+          <td class="py-3 px-4">
+            <span class="bg-amber-50 text-amber-800 px-2 py-0.5 rounded border border-amber-200 font-medium text-[11px]">
+              <i class="fa-solid fa-comments text-amber-500 mr-1"></i>${escapeHtml(lead.askedProduct || '-')}
+            </span>
+          </td>
           <td class="py-3 px-4 truncate max-w-[180px]">${getLeadProductSummary(lead)}</td>
           <td class="py-3 px-4 text-right font-bold text-slate-800">Rp ${formatRupiah(lead.finalPrice)}</td>
           <td class="py-3 px-4">
@@ -1118,7 +1223,6 @@
       });
     }
 
-    /* Filter Helper Function */
     function getFilteredLeads() {
       const q = document.getElementById('searchInput').value.toLowerCase();
       const source = document.getElementById('filterSource').value;
@@ -1128,6 +1232,7 @@
         const matchSearch = !q || 
           l.name.toLowerCase().includes(q) || 
           l.phone.includes(q) || 
+          (l.askedProduct && l.askedProduct.toLowerCase().includes(q)) ||
           (l.notes && l.notes.toLowerCase().includes(q)) ||
           getLeadProductSummary(l).toLowerCase().includes(q);
 
@@ -1150,9 +1255,38 @@
       applyFilters();
     }
 
-    /* Lead Modal Form & Product Calculation Logic */
     function closeLeadModal() {
       document.getElementById('leadModal').classList.add('hidden');
+    }
+
+    function populateAskedProductOptions(selectedVal = '') {
+      const select = document.getElementById('leadAskedProductSelect');
+      const customInput = document.getElementById('leadAskedProductCustom');
+      select.innerHTML = '<option value="">-- Pilih dari Katalog --</option>';
+
+      let isKnownInCatalog = false;
+      products.forEach(p => {
+        const selected = (selectedVal === p.name) ? 'selected' : '';
+        if (selectedVal === p.name) isKnownInCatalog = true;
+        select.innerHTML += `<option value="${escapeHtml(p.name)}" ${selected}>${escapeHtml(p.name)}</option>`;
+      });
+
+      select.innerHTML += `<option value="__custom__" ${(!isKnownInCatalog && selectedVal) ? 'selected' : ''}>+ Ketik Manual / Lainnya</option>`;
+
+      if (!isKnownInCatalog && selectedVal) {
+        customInput.value = selectedVal;
+      } else {
+        customInput.value = '';
+      }
+    }
+
+    function handleAskedProductSelectChange(selectEl) {
+      const customInput = document.getElementById('leadAskedProductCustom');
+      if (selectEl.value === '__custom__') {
+        customInput.focus();
+      } else if (selectEl.value) {
+        customInput.value = selectEl.value;
+      }
     }
 
     function addProductRow(itemData = null) {
@@ -1245,7 +1379,6 @@
       return { subtotal, discountAmount, finalPrice };
     }
 
-    /* Lead Modal Form Logic */
     function openLeadModal(leadToEdit = null) {
       const modal = document.getElementById('leadModal');
       const form = document.getElementById('leadForm');
@@ -1257,7 +1390,7 @@
       if (leadToEdit) {
         document.getElementById('modalLeadTitle').innerHTML = `<i class="fa-solid fa-pen-to-square text-emerald-400 mr-2"></i> Edit Data Lead`;
         document.getElementById('leadId').value = leadToEdit.id;
-        document.getElementById('leadDate').value = leadToEdit.createdAt ? leadToEdit.createdAt.slice(0, 10) : new Date().toISOString().slice(0, 10);
+        document.getElementById('leadDate').value = leadToEdit.leadDate || (leadToEdit.createdAt ? leadToEdit.createdAt.slice(0, 10) : new Date().toISOString().slice(0, 10));
         document.getElementById('leadName').value = leadToEdit.name;
         document.getElementById('leadPhone').value = leadToEdit.phone;
         document.getElementById('leadAddress').value = leadToEdit.address || '';
@@ -1267,6 +1400,8 @@
         document.getElementById('leadStage').value = leadToEdit.stage;
         document.getElementById('leadPic').value = leadToEdit.pic;
         document.getElementById('leadNotes').value = leadToEdit.notes || '';
+
+        populateAskedProductOptions(leadToEdit.askedProduct || '');
 
         (leadToEdit.skinType || []).forEach(val => {
           const cb = document.querySelector(`input[name="skinType"][value="${val}"]`);
@@ -1287,6 +1422,8 @@
         document.getElementById('leadId').value = '';
         document.getElementById('leadDate').value = new Date().toISOString().slice(0, 10);
         document.getElementById('leadPic').value = activeUser !== 'Admin' ? activeUser : 'Siti CS';
+        
+        populateAskedProductOptions('');
         addProductRow();
       }
 
@@ -1297,7 +1434,7 @@
     function saveLead(e) {
       e.preventDefault();
       const leadId = document.getElementById('leadId').value;
-      const leadDateVal = document.getElementById('leadDate').value;
+      const leadDateVal = document.getElementById('leadDate').value || new Date().toISOString().slice(0, 10);
       const name = document.getElementById('leadName').value.trim();
       const phone = document.getElementById('leadPhone').value.trim();
       const address = document.getElementById('leadAddress').value.trim();
@@ -1305,6 +1442,12 @@
       const stage = document.getElementById('leadStage').value;
       const pic = document.getElementById('leadPic').value;
       const notes = document.getElementById('leadNotes').value.trim();
+
+      // Get Asked Product
+      const selectAsked = document.getElementById('leadAskedProductSelect').value;
+      const customAsked = document.getElementById('leadAskedProductCustom').value.trim();
+      let askedProduct = (selectAsked === '__custom__' || !selectAsked) ? customAsked : selectAsked;
+      if (!askedProduct) askedProduct = customAsked || 'Umum / Unspecified';
 
       const skinType = Array.from(document.querySelectorAll('input[name="skinType"]:checked')).map(c => c.value);
       const hairType = Array.from(document.querySelectorAll('input[name="hairType"]:checked')).map(c => c.value);
@@ -1327,16 +1470,16 @@
       });
 
       const totals = calculateLeadTotal();
-      const dateObj = leadDateVal ? new Date(leadDateVal) : new Date();
 
       if (leadId) {
         const lead = leads.find(l => l.id === leadId);
         if (lead) {
           const oldStage = lead.stage;
-          lead.createdAt = dateObj.toISOString();
+          lead.leadDate = leadDateVal;
           lead.name = name;
           lead.phone = phone;
           lead.address = address;
+          lead.askedProduct = askedProduct;
           lead.items = items;
           lead.discountType = document.getElementById('discountType').value;
           lead.discountVal = parseFloat(document.getElementById('discountValue').value || 0);
@@ -1361,9 +1504,11 @@
       } else {
         const newLead = {
           id: 'L-' + Math.floor(1000 + Math.random() * 9000),
+          leadDate: leadDateVal,
           name: name,
           phone: phone,
           address: address,
+          askedProduct: askedProduct,
           items: items,
           discountType: document.getElementById('discountType').value,
           discountVal: parseFloat(document.getElementById('discountValue').value || 0),
@@ -1374,7 +1519,7 @@
           leadSource: leadSource,
           notes: notes,
           pic: pic,
-          createdAt: dateObj.toISOString(),
+          createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
           history: [
             {
@@ -1394,7 +1539,6 @@
       updateNotifications();
     }
 
-    /* Lead Detail Modal Logic */
     function openLeadDetail(id) {
       currentSelectedLeadId = id;
       const lead = leads.find(l => l.id === id);
@@ -1405,10 +1549,12 @@
       document.getElementById('detailSourceBadge').innerText = lead.leadSource;
       document.getElementById('detailPhone').innerText = lead.phone;
       
-      const primaryProduct = (lead.items && lead.items.length > 0) ? lead.items[0].name : 'produk kami';
-      const waMsg = `Halo ${lead.name}, bagaimana perkembangan kulitnya setelah menggunakan ${primaryProduct}?`;
+      const primaryProduct = lead.askedProduct || ((lead.items && lead.items.length > 0) ? lead.items[0].name : 'produk kami');
+      const waMsg = `Halo ${lead.name}, bagaimana perkembangan konsultasi mengenai ${primaryProduct}?`;
       document.getElementById('btnQuickWA').href = `https://wa.me/${cleanPhoneWA(lead.phone)}?text=${encodeURIComponent(waMsg)}`;
       
+      document.getElementById('detailLeadDate').innerText = formatDateShort(lead.leadDate || lead.createdAt);
+      document.getElementById('detailAskedProduct').innerText = lead.askedProduct || '-';
       document.getElementById('detailProducts').innerText = getLeadProductSummary(lead);
       document.getElementById('detailPrice').innerText = `Rp ${formatRupiah(lead.finalPrice)}`;
       document.getElementById('detailPic').innerText = lead.pic;
@@ -1490,7 +1636,6 @@
       }
     }
 
-    /* Dashboard Analytics Rendering */
     function renderDashboardCharts() {
       const filtered = getFilteredLeads();
 
@@ -1508,6 +1653,7 @@
       const staleCount = filtered.filter(l => isLeadStale(l)).length;
       document.getElementById('statStaleLeads').innerText = staleCount;
 
+      // 1. Funnel Distribution Chart
       const funnelCtx = document.getElementById('funnelChart').getContext('2d');
       const stageCounts = { awareness: 0, consideration: 0, conversion: 0, retention: 0, advocacy: 0 };
       filtered.forEach(l => { if(stageCounts[l.stage] !== undefined) stageCounts[l.stage]++; });
@@ -1532,6 +1678,7 @@
         }
       });
 
+      // 2. Revenue by Lead Source
       const sourceCtx = document.getElementById('sourceChart').getContext('2d');
       const sourceSales = {};
       filtered.forEach(l => {
@@ -1557,6 +1704,40 @@
         }
       });
 
+      // 3. NEW CHART: Most Asked Products Analytics (Demand Radar)
+      const askedCtx = document.getElementById('askedProductChart').getContext('2d');
+      const askedCounts = {};
+      filtered.forEach(l => {
+        const prod = l.askedProduct || 'Belum Ditentukan';
+        askedCounts[prod] = (askedCounts[prod] || 0) + 1;
+      });
+
+      const sortedAsked = Object.keys(askedCounts)
+        .map(k => ({ name: k, count: askedCounts[k] }))
+        .sort((a,b) => b.count - a.count);
+
+      if (askedProductChartInstance) askedProductChartInstance.destroy();
+      askedProductChartInstance = new Chart(askedCtx, {
+        type: 'bar',
+        data: {
+          labels: sortedAsked.map(i => i.name),
+          datasets: [{
+            label: 'Jumlah Inquiries (Paling Banyak Ditanya)',
+            data: sortedAsked.map(i => i.count),
+            backgroundColor: '#f59e0b',
+            borderRadius: 6
+          }]
+        },
+        options: {
+          indexAxis: 'y', // Horizontal Bar Chart for easy reading
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } }
+        }
+      });
+
+      // 4. Top Products Sold Table
       const prodRank = {};
       filtered.forEach(l => {
         if(l.items) {
@@ -1588,7 +1769,6 @@
       });
     }
 
-    /* Product Catalog Management */
     function renderProductsCatalog() {
       const grid = document.getElementById('productListGrid');
       grid.innerHTML = '';
@@ -1631,15 +1811,15 @@
       }
     }
 
-    /* Excel / CSV Export & Import */
     function exportToExcel() {
       const dataToExport = getFilteredLeads().map(l => ({
         'ID Lead': l.id,
-        'Tanggal Input': formatDateShort(l.createdAt),
+        'Tanggal Lead': formatDateShort(l.leadDate || l.createdAt),
         'Nama Pelanggan': l.name,
         'No WhatsApp': l.phone,
         'Alamat': l.address || '',
-        'Produk': getLeadProductSummary(l),
+        'Produk Ditanya (Inquiry)': l.askedProduct || '',
+        'Produk Dibeli': getLeadProductSummary(l),
         'Harga Akhir': l.finalPrice,
         'Sumber': l.leadSource,
         'Tahap Pipeline': l.stage,
@@ -1656,9 +1836,11 @@
     function exportToCSV() {
       const filtered = getFilteredLeads().map(l => ({
         'ID': l.id,
+        'TanggalLead': formatDateShort(l.leadDate || l.createdAt),
         'Nama': l.name,
         'Telepon': l.phone,
-        'Produk': getLeadProductSummary(l),
+        'ProdukDitanya': l.askedProduct || '',
+        'ProdukDibeli': getLeadProductSummary(l),
         'HargaAkhir': l.finalPrice,
         'Sumber': l.leadSource,
         'Tahap': l.stage,
@@ -1689,13 +1871,18 @@
         rawData.forEach((row) => {
           const name = row['Nama Pelanggan'] || row['Nama'] || row['Name'];
           const phone = row['No WhatsApp'] || row['Telepon'] || row['Phone'] || row['WA'];
+          const leadDate = row['Tanggal Lead'] || row['Tanggal'] || new Date().toISOString().slice(0, 10);
+          const askedProd = row['Produk Ditanya (Inquiry)'] || row['Produk Ditanya'] || row['Produk'] || 'Import Item';
+
           if (name && phone) {
             leads.unshift({
               id: 'L-IMP-' + Math.floor(1000 + Math.random() * 9000),
+              leadDate: String(leadDate),
               name: String(name),
               phone: String(phone),
               address: row['Alamat'] || '',
-              items: [{ productId: 'p1', name: row['Produk'] || 'Produk Import', qty: 1, price: parseFloat(row['Harga Akhir'] || 0) }],
+              askedProduct: String(askedProd),
+              items: [{ productId: 'p1', name: row['Produk Dibeli'] || row['Produk'] || 'Produk Import', qty: 1, price: parseFloat(row['Harga Akhir'] || 0) }],
               discountType: 'fixed',
               discountVal: 0,
               finalPrice: parseFloat(row['Harga Akhir'] || row['Harga'] || 0),
@@ -1718,7 +1905,6 @@
       reader.readAsBinaryString(file);
     }
 
-    /* REAL GOOGLE SHEETS SINKRONISASI 2-ARAH (APPS SCRIPT) */
     function saveGSheetUrl() {
       const url = document.getElementById('gSheetWebhookUrl').value.trim();
       if (!url) {
@@ -1745,7 +1931,6 @@
       if (statusEl) statusEl.innerHTML = '<span class="text-amber-600"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Menyinkronkan data ke Google Sheets...</span>';
 
       try {
-        // Mengirim JSON payload dengan Mode text/plain untuk menghindari CORS Preflight issue di Apps Script
         const response = await fetch(url, {
           method: 'POST',
           mode: 'cors',
@@ -1799,70 +1984,66 @@
         }
       } catch (err) {
         console.error('Gagal Pull AppsScript:', err);
-        if (statusEl) statusEl.innerHTML = `<span class="text-rose-600"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Gagal mengambil data dari Google Sheets</span>`;
-        alert('Gagal mengambil data dari Google Sheets. Periksa URL deployment Web App.');
+        if (statusEl) statusEl.innerHTML = `<span class="text-rose-600"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Gagal tarik data dari Google Sheets</span>`;
+        alert('Gagal mengambil data dari Google Sheets. Periksa URL Webhook Apps Script.');
       }
-    }
-
-    /* Stale Lead Notification Engine */
-    function isLeadStale(lead) {
-      if (lead.stage === 'conversion' || lead.stage === 'advocacy') return false;
-      const lastUpdate = new Date(lead.updatedAt || lead.createdAt).getTime();
-      const diffDays = (Date.now() - lastUpdate) / (1000 * 3600 * 24);
-      return diffDays >= 3;
     }
 
     function updateNotifications() {
       const staleLeads = leads.filter(l => isLeadStale(l));
       const badge = document.getElementById('notifBadge');
-      const list = document.getElementById('notifList');
       const countText = document.getElementById('notifCountText');
+      const notifList = document.getElementById('notifList');
 
       if (staleLeads.length > 0) {
-        badge.classList.remove('hidden');
         badge.innerText = staleLeads.length;
-        countText.innerText = `${staleLeads.length} Lead Perlu Follow Up`;
+        badge.classList.remove('hidden');
+        countText.innerText = `${staleLeads.length} Lead Stagnan (>3 Hari)`;
       } else {
         badge.classList.add('hidden');
-        countText.innerText = `Semua lead terkontrol`;
+        countText.innerText = 'Tidak ada lead stagnan';
       }
 
-      list.innerHTML = '';
+      notifList.innerHTML = '';
       if (staleLeads.length === 0) {
-        list.innerHTML = `<p class="p-4 text-center text-slate-400">Tidak ada lead yang stagnan saat ini.</p>`;
+        notifList.innerHTML = `<div class="p-4 text-center text-slate-400">Semua lead sudah di-follow up dengan baik!</div>`;
         return;
       }
 
       staleLeads.forEach(l => {
+        const days = Math.floor((Date.now() - new Date(l.updatedAt).getTime()) / (3600000 * 24));
         const item = document.createElement('div');
-        item.className = 'p-3 hover:bg-slate-50 flex justify-between items-center transition';
+        item.className = 'p-3 hover:bg-slate-50 cursor-pointer transition flex items-center justify-between';
+        item.onclick = () => {
+          toggleNotifDropdown();
+          openLeadDetail(l.id);
+        };
         item.innerHTML = `
           <div>
-            <p class="font-bold text-slate-800">${escapeHtml(l.name)}</p>
-            <p class="text-[10px] text-slate-500">Tahap: <span class="uppercase font-semibold text-amber-600">${l.stage}</span> • PIC: ${escapeHtml(l.pic)}</p>
+            <p class="font-bold text-slate-800 text-xs">${escapeHtml(l.name)}</p>
+            <p class="text-[10px] text-amber-600 font-medium">Ditanya: ${escapeHtml(l.askedProduct || '-')}</p>
+            <p class="text-[10px] text-slate-400">PIC: ${escapeHtml(l.pic)} • ${days} hari lalu</p>
           </div>
-          <button onclick="openLeadDetail('${l.id}')" class="px-2 py-1 bg-amber-50 text-amber-600 border border-amber-200 rounded hover:bg-amber-100 font-semibold text-[10px]">
-            Follow Up
-          </button>
+          <span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-[10px] font-bold">Follow Up</span>
         `;
-        list.appendChild(item);
+        notifList.appendChild(item);
       });
     }
 
     function toggleNotifDropdown() {
-      document.getElementById('notifDropdown').classList.toggle('hidden');
+      const dropdown = document.getElementById('notifDropdown');
+      dropdown.classList.toggle('hidden');
     }
 
-    function renderAllViews() {
-      renderPipeline();
-      renderTable();
-      if (!document.getElementById('view-dashboard').classList.contains('hidden')) {
-        renderDashboardCharts();
-      }
+    function isLeadStale(lead) {
+      if (lead.stage === 'conversion' || lead.stage === 'retention' || lead.stage === 'advocacy') return false;
+      const lastUpdate = new Date(lead.updatedAt || lead.createdAt).getTime();
+      const diffDays = (Date.now() - lastUpdate) / (1000 * 3600 * 24);
+      return diffDays >= 3;
     }
 
     function getLeadProductSummary(lead) {
-      if (!lead.items || lead.items.length === 0) return 'Tidak ada produk';
+      if (!lead.items || lead.items.length === 0) return 'Belum Beli';
       return lead.items.map(i => `${i.name} (x${i.qty})`).join(', ');
     }
 
@@ -1871,25 +2052,41 @@
     }
 
     function formatDateShort(dateStr) {
-      if(!dateStr) return '-';
-      return new Date(dateStr).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+      if (!dateStr) return '-';
+      try {
+        const d = new Date(dateStr);
+        if (isNaN(d.getTime())) return dateStr;
+        return d.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      } catch(e) {
+        return dateStr;
+      }
     }
 
     function formatDateTime(dateStr) {
-      if(!dateStr) return '-';
-      const d = new Date(dateStr);
-      return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }) + ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+      if (!dateStr) return '-';
+      try {
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' }) + ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+      } catch(e) {
+        return dateStr;
+      }
     }
 
     function cleanPhoneWA(phone) {
-      let p = phone.replace(/[^0-9]/g, '');
-      if (p.startsWith('0')) p = '62' + p.substring(1);
-      return p;
+      if (!phone) return '';
+      let clean = phone.replace(/[^0-9]/g, '');
+      if (clean.startsWith('0')) clean = '62' + clean.slice(1);
+      return clean;
     }
 
     function escapeHtml(str) {
       if (!str) return '';
-      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
     }
   </script>
 </body>
