@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusCRM - Platform Management CS & Leads</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans antialiased">
+
+    <!-- Sidebar & App Layout -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-slate-900 text-white flex flex-col justify-between hidden md:flex">
+            <div>
+                <div class="p-5 text-2xl font-bold tracking-wider text-indigo-400 flex items-center gap-2 border-b border-slate-800">
+                    <i class="fa-solid fa-chart-line"></i> NexusCRM
+                </div>
+                <nav class="mt-5 px-3 space-y-1">
+                    <button onclick="showTab('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg text-indigo-400 bg-slate-800">
+                        <i class="fa-solid fa-border-all w-5"></i> Dashboard
+                    </button>
+                    <button onclick="showTab('leads')" id="nav-leads" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition">
+                        <i class="fa-solid fa-users w-5"></i> Lead & Order Data
+                    </button>
+                    <button onclick="showTab('products')" id="nav-products" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition">
+                        <i class="fa-solid fa-box w-5"></i> Katalag Produk
+                    </button>
+                    <button onclick="showTab('integration')" id="nav-integration" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition">
+                        <i class="fa-solid fa-plug w-5"></i> Integrasi & Excel
+                    </button>
+                </nav>
+            </div>
+            <div class="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
+                NexusCRM v1.0 &copy; 2026
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col overflow-y-auto">
+
+            <!-- Top Header Navbar -->
+            <header class="bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center shadow-sm">
+                <h1 id="page-title" class="text-xl font-bold text-slate-800">Dashboard Visualisasi</h1>
+                <div class="flex items-center gap-4">
+                    <button onclick="openLeadModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow flex items-center gap-2 transition">
+                        <i class="fa-solid fa-plus"></i> Tambah Lead Baru
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dynamic Views Container -->
+            <div class="p-6 space-y-6">
+
+                <!-- 1. DASHBOARD VIEW -->
+                <div id="view-dashboard" class="tab-content">
+                    <!-- Stat Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Leads</p>
+                                <h3 id="stat-total-leads" class="text-2xl font-extrabold text-slate-800 mt-1">0</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Closing / Deal</p>
+                                <h3 id="stat-deal-leads" class="text-2xl font-extrabold text-emerald-600 mt-1">0</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Konversi Rate</p>
+                                <h3 id="stat-conversion" class="text-2xl font-extrabold text-blue-600 mt-1">0%</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-chart-pie"></i>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Estimasi Omset</p>
+                                <h3 id="stat-revenue" class="text-2xl font-extrabold text-indigo-600 mt-1">Rp 0</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-wallet"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Area -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                            <h4 class="text-sm font-semibold text-slate-700 mb-4">Status Prospek (Funnel Sales)</h4>
+                            <div class="h-64">
+                                <canvas id="statusChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                            <h4 class="text-sm font-semibold text-slate-700 mb-4">Sebaran Sumber Lead</h4>
+                            <div class="h-64">
+                                <canvas id="sourceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. LEADS MANAGEMENT VIEW -->
+                <div id="view-leads" class="tab-content hidden">
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <!-- Filter & Search Bar -->
+                        <div class="p-4 border-b border-slate-200 flex flex-col md:flex-row gap-3 justify-between">
+                            <input type="text" id="search-input" onkeyup="renderLeads()" placeholder="Cari nama, HP, atau kota..." class="w-full md:w-64 px-3 py-2 border rounded-lg text-sm focus:outline-indigo-500">
+                            <div class="flex gap-2">
+                                <select id="filter-status" onchange="renderLeads()" class="px-3 py-2 border rounded-lg text-sm bg-white focus:outline-indigo-500">
+                                    <option value="">Semua Status</option>
+                                    <option value="Baru">Baru</option>
+                                    <option value="Follow Up">Follow Up</option>
+                                    <option value="Deal">Deal</option>
+                                    <option value="Batal">Batal</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Data Table -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-sm">
+                                <thead>
+                                    <tr class="bg-slate-50 text-slate-500 border-b border-slate-200 uppercase text-xs font-semibold">
+                                        <th class="p-4">Tanggal</th>
+                                        <th class="p-4">Pelanggan</th>
+                                        <th class="p-4">Telepon / WA</th>
+                                        <th class="p-4">Sumber</th>
+                                        <th class="p-4">Produk</th>
+                                        <th class="p-4">Status</th>
+                                        <th class="p-4 text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="leads-table-body" class="divide-y divide-slate-100">
+                                    <!-- Dynamic rows via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. PRODUCTS CATALOG VIEW -->
+                <div id="view-products" class="tab-content hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-base font-semibold text-slate-700">Daftar Produk Terdaftar</h3>
+                        <button onclick="openProductModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow transition">
+                            <i class="fa-solid fa-plus"></i> Tambah Produk
+                        </button>
+                    </div>
+                    <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Dynamic Product Cards -->
+                    </div>
+                </div>
+
+                <!-- 4. INTEGRATION & EXPORT VIEW -->
+                <div id="view-integration" class="tab-content hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                            <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-file-excel text-emerald-600"></i> Eksport Data
+                            </h3>
+                            <p class="text-sm text-slate-600">Unduh data prospek yang tersimpan ke dalam format CSV/Excel untuk dianalisis lebih lanjut.</p>
+                            <button onclick="exportToCSV()" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2">
+                                <i class="fa-solid fa-download"></i> Unduh File CSV
+                            </button>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                            <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-cloud-arrow-up text-indigo-600"></i> Synchronize Google Sheets
+                            </h3>
+                            <p class="text-sm text-slate-600">Hubungkan Webhook URL Google Apps Script Anda untuk sinkronisasi otomatis.</p>
+                            <input type="text" id="webhook-url" placeholder="https://script.google.com/macros/s/..." class="w-full px-3 py-2 border rounded-lg text-sm">
+                            <button onclick="saveWebhook()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                                Simpan Webhook URL
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Form: Tambah/Edit Lead -->
+    <div id="lead-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center hidden z-50 p-4">
+        <div class="bg-white w-full max-w-md rounded-2xl shadow-xl overflow-hidden">
+            <div class="px-6 py-4 bg-slate-800 text-white flex justify-between items-center">
+                <h3 id="modal-lead-title" class="font-bold">Tambah Lead Baru</h3>
+                <button onclick="closeLeadModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="lead-form" onsubmit="saveLead(event)" class="p-6 space-y-4">
+                <input type="hidden" id="lead-id">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Lengkap</label>
+                    <input type="text" id="lead-name" required class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Nomor WhatsApp</label>
+                    <input type="text" id="lead-phone" required placeholder="08xxxxxxxxxx" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-indigo-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Sumber Lead</label>
+                        <select id="lead-source" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-indigo-500">
+                            <option value="WhatsApp Ads">WhatsApp Ads</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="TikTok">TikTok</option>
+                            <option value="Organic Website">Organic Website</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Status Prospek</label>
+                        <select id="lead-status" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-indigo-500">
+                            <option value="Baru">Baru</option>
+                            <option value="Follow Up">Follow Up</option>
+                            <option value="Deal">Deal</option>
+                            <option value="Batal">Batal</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Produk Diminati</label>
+                    <select id="lead-product" class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-indigo-500">
+                        <!-- Dynamic Product Options -->
+                    </select>
+                </div>
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="closeLeadModal()" class="px-4 py-2 border rounded-lg text-sm text-slate-600 hover:bg-slate-50">Batal</button>
+                    <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Form: Tambah Produk -->
+    <div id="product-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center hidden z-50 p-4">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-xl overflow-hidden">
+            <div class="px-6 py-4 bg-slate-800 text-white flex justify-between items-center">
+                <h3 class="font-bold">Tambah Produk Baru</h3>
+                <button onclick="closeProductModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="saveProduct(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Produk</label>
+                    <input type="text" id="prod-name" required class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Harga (Rp)</label>
+                    <input type="number" id="prod-price" required class="w-full px-3 py-2 border rounded-lg text-sm focus:outline-indigo-500">
+                </div>
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="closeProductModal()" class="px-4 py-2 border rounded-lg text-sm text-slate-600 hover:bg-slate-50">Batal</button>
+                    <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Default Sample Data Structure
+        let leads = JSON.parse(localStorage.getItem('nexus_leads')) || [
+            { id: 1, name: "Budi Santoso", phone: "081234567890", source: "WhatsApp Ads", product: "Paket Premium", status: "Deal", date: "2026-08-10" },
+            { id: 2, name: "Siti Rahma", phone: "085678901234", source: "Instagram", product: "Paket Starter", status: "Follow Up", date: "2026-08-11" }
+        ];
+
+        let products = JSON.parse(localStorage.getItem('nexus_products')) || [
+            { id: 1, name: "Paket Starter", price: 150000 },
+            { id: 2, name: "Paket Premium", price: 350000 }
+        ];
+
+        let statusChartObj = null;
+        let sourceChartObj = null;
+
+        // Init Application
+        document.addEventListener('DOMContentLoaded', () => {
+            renderLeads();
+            renderProducts();
+            updateDashboard();
+            populateProductDropdown();
+        });
+
+        // Tab Navigation Logic
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(el => {
+                el.classList.remove('bg-slate-800', 'text-indigo-400');
+                el.classList.add('text-slate-400');
+            });
+
+            document.getElementById(`view-${tabName}`).classList.remove('hidden');
+            const activeNav = document.getElementById(`nav-${tabName}`);
+            activeNav.classList.add('bg-slate-800', 'text-indigo-400');
+
+            const titles = {
+                dashboard: 'Dashboard Visualisasi',
+                leads: 'Manajemen Data Leads & Order',
+                products: 'Katalog Produk & Harga',
+                integration: 'Integrasi Webhook & CSV'
+            };
+            document.getElementById('page-title').innerText = titles[tabName];
+
+            if(tabName === 'dashboard') updateDashboard();
+        }
+
+        // Render Leads Table
+        function renderLeads() {
+            const tableBody = document.getElementById('leads-table-body');
+            const search = document.getElementById('search-input').value.toLowerCase();
+            const filterStatus = document.getElementById('filter-status').value;
+
+            tableBody.innerHTML = '';
+
+            const filtered = leads.filter(item => {
+                const matchSearch = item.name.toLowerCase().includes(search) || item.phone.includes(search);
+                const matchStatus = filterStatus ? item.status === filterStatus : true;
+                return matchSearch && matchStatus;
+            });
+
+            filtered.forEach(lead => {
+                const badgeColor = {
+                    'Baru': 'bg-blue-100 text-blue-700',
+                    'Follow Up': 'bg-amber-100 text-amber-700',
+                    'Deal': 'bg-emerald-100 text-emerald-700',
+                    'Batal': 'bg-rose-100 text-rose-700'
+                }[lead.status] || 'bg-slate-100 text-slate-700';
+
+                tableBody.innerHTML += `
+                    <tr class="hover:bg-slate-50 border-b border-slate-100">
+                        <td class="p-4 text-xs text-slate-500">${lead.date}</td>
+                        <td class="p-4 font-semibold text-slate-800">${lead.name}</td>
+                        <td class="p-4 text-slate-600">${lead.phone}</td>
+                        <td class="p-4 text-slate-600"><span class="px-2 py-1 bg-slate-100 rounded text-xs">${lead.source}</span></td>
+                        <td class="p-4 text-slate-600">${lead.product}</td>
+                        <td class="p-4"><span class="px-2.5 py-1 rounded-full text-xs font-semibold ${badgeColor}">${lead.status}</span></td>
+                        <td class="p-4 text-center space-x-2">
+                            <button onclick="editLead(${lead.id})" class="text-indigo-600 hover:text-indigo-900"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button onclick="deleteLead(${lead.id})" class="text-rose-600 hover:text-rose-900"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Save / Update Lead
+        function saveLead(e) {
+            e.preventDefault();
+            const id = document.getElementById('lead-id').value;
+            const name = document.getElementById('lead-name').value;
+            const phone = document.getElementById('lead-phone').value;
+            const source = document.getElementById('lead-source').value;
+            const status = document.getElementById('lead-status').value;
+            const product = document.getElementById('lead-product').value;
+
+            if (id) {
+                const index = leads.findIndex(l => l.id == id);
+                leads[index] = { ...leads[index], name, phone, source, status, product };
+            } else {
+                const newLead = {
+                    id: Date.now(),
+                    name, phone, source, status, product,
+                    date: new Date().toISOString().split('T')[0]
+                };
+                leads.unshift(newLead);
+            }
+
+            localStorage.setItem('nexus_leads', JSON.stringify(leads));
+            closeLeadModal();
+            renderLeads();
+            updateDashboard();
+        }
+
+        // Delete Lead
+        function deleteLead(id) {
+            if(confirm('Yakin ingin menghapus data prospek ini?')) {
+                leads = leads.filter(l => l.id !== id);
+                localStorage.setItem('nexus_leads', JSON.stringify(leads));
+                renderLeads();
+                updateDashboard();
+            }
+        }
+
+        // Modal Handlers
+        function openLeadModal() {
+            document.getElementById('lead-form').reset();
+            document.getElementById('lead-id').value = '';
+            document.getElementById('modal-lead-title').innerText = 'Tambah Lead Baru';
+            document.getElementById('lead-modal').classList.remove('hidden');
+        }
+
+        function closeLeadModal() {
+            document.getElementById('lead-modal').classList.add('hidden');
+        }
+
+        function editLead(id) {
+            const lead = leads.find(l => l.id === id);
+            if(!lead) return;
+            document.getElementById('lead-id').value = lead.id;
+            document.getElementById('lead-name').value = lead.name;
+            document.getElementById('lead-phone').value = lead.phone;
+            document.getElementById('lead-source').value = lead.source;
+            document.getElementById('lead-status').value = lead.status;
+            document.getElementById('lead-product').value = lead.product;
+
+            document.getElementById('modal-lead-title').innerText = 'Edit Data Lead';
+            document.getElementById('lead-modal').classList.remove('hidden');
+        }
+
+        // Products Catalog Functions
+        function renderProducts() {
+            const container = document.getElementById('product-grid');
+            container.innerHTML = '';
+            products.forEach(p => {
+                container.innerHTML += `
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                        <div>
+                            <h4 class="font-bold text-slate-800">${p.name}</h4>
+                            <p class="text-sm font-semibold text-emerald-600 mt-1">Rp ${Number(p.price).toLocaleString('id-ID')}</p>
+                        </div>
+                        <button onclick="deleteProduct(${p.id})" class="text-slate-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
+        }
+
+        function openProductModal() { document.getElementById('product-modal').classList.remove('hidden'); }
+        function closeProductModal() { document.getElementById('product-modal').classList.add('hidden'); }
+
+        function saveProduct(e) {
+            e.preventDefault();
+            const name = document.getElementById('prod-name').value;
+            const price = parseFloat(document.getElementById('prod-price').value);
+
+            products.push({ id: Date.now(), name, price });
+            localStorage.setItem('nexus_products', JSON.stringify(products));
+            closeProductModal();
+            renderProducts();
+            populateProductDropdown();
+        }
+
+        function deleteProduct(id) {
+            products = products.filter(p => p.id !== id);
+            localStorage.setItem('nexus_products', JSON.stringify(products));
+            renderProducts();
+            populateProductDropdown();
+        }
+
+        function populateProductDropdown() {
+            const dropdown = document.getElementById('lead-product');
+            dropdown.innerHTML = '';
+            products.forEach(p => {
+                dropdown.innerHTML += `<option value="${p.name}">${p.name}</option>`;
+            });
+        }
+
+        // Dashboard Metrics & Charts
+        function updateDashboard() {
+            const total = leads.length;
+            const deals = leads.filter(l => l.status === 'Deal').length;
+            const conversion = total > 0 ? ((deals / total) * 100).toFixed(1) : 0;
+
+            let estRevenue = 0;
+            leads.filter(l => l.status === 'Deal').forEach(l => {
+                const prod = products.find(p => p.name === l.product);
+                if(prod) estRevenue += prod.price;
+            });
+
+            document.getElementById('stat-total-leads').innerText = total;
+            document.getElementById('stat-deal-leads').innerText = deals;
+            document.getElementById('stat-conversion').innerText = `${conversion}%`;
+            document.getElementById('stat-revenue').innerText = `Rp ${estRevenue.toLocaleString('id-ID')}`;
+
+            renderCharts();
+        }
+
+        function renderCharts() {
+            // Status Funnel Chart
+            const statusCounts = { 'Baru': 0, 'Follow Up': 0, 'Deal': 0, 'Batal': 0 };
+            leads.forEach(l => { if(statusCounts[l.status] !== undefined) statusCounts[l.status]++; });
+
+            if(statusChartObj) statusChartObj.destroy();
+            const ctx1 = document.getElementById('statusChart').getContext('2d');
+            statusChartObj = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(statusCounts),
+                    datasets: [{
+                        label: 'Jumlah Prospek',
+                        data: Object.values(statusCounts),
+                        backgroundColor: ['#3b82f6', '#f59e0b', '#10b981', '#f43f5e']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            // Source Chart
+            const sourceCounts = {};
+            leads.forEach(l => { sourceCounts[l.source] = (sourceCounts[l.source] || 0) + 1; });
+
+            if(sourceChartObj) sourceChartObj.destroy();
+            const ctx2 = document.getElementById('sourceChart').getContext('2d');
+            sourceChartObj = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(sourceCounts),
+                    datasets: [{
+                        data: Object.values(sourceCounts),
+                        backgroundColor: ['#6366f1', '#ec4899', '#14b8a6', '#8b5cf6', '#64748b']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // Export to CSV
+        function exportToCSV() {
+            if(leads.length === 0) return alert('Belum ada data untuk dieksport.');
+            let csv = 'ID,Tanggal,Nama,Telepon,Sumber,Produk,Status\n';
+            leads.forEach(l => {
+                csv += `${l.id},${l.date},"${l.name}",${l.phone},"${l.source}","${l.product}",${l.status}\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', `NexusCRM_Leads_${new Date().toISOString().split('T')[0]}.csv`);
+            a.click();
+        }
+
+        function saveWebhook() {
+            const url = document.getElementById('webhook-url').value;
+            localStorage.setItem('nexus_webhook', url);
+            alert('Webhook URL berhasil disimpan!');
+        }
+    </script>
+</body>
+</html>
